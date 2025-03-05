@@ -1,13 +1,13 @@
-# c_template_application
-A template for all of my c projects.
+# Quatro3D
+A simple 3D geometry library for 3D vectors (point translations) and quaternions (rotations), built for a Drone project, but not limited in its usage.
 
 ## Setup instructions
 
 **Download source code :**
- * `git clone https://github.com/RohanVDvivedi/c_template_application.git`
+ * `git clone https://github.com/RohanVDvivedi/Quatro3D.git`
 
 **Build from source :**
- * `cd c_template_application`
+ * `cd Quatro3D`
  * `make clean all`
 
 **Install from the build :**
@@ -15,13 +15,12 @@ A template for all of my c projects.
  * ***Once you have installed from source, you may discard the build by*** `make clean`
 
 ## Using The library
- * add `-lcapp` linker flag, while compiling your application
+ * add `-lquatro3d -lm` linker flag, while compiling your application
  * do not forget to include appropriate public api headers as and when needed. this includes
-   * `#include<capp.h>`
-   * `#include<print_temp.h>`
+   * `#include<quatro.h>`
 
 ## Instructions for uninstalling library
 
 **Uninstall :**
- * `cd c_template_application`
+ * `cd Quatro3D`
  * `sudo make uninstall`
