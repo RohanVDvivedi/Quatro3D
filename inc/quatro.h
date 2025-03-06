@@ -27,4 +27,9 @@ struct quaternion
 	float_number zk;
 };
 
+extern const vector zero_vector;
+extern const vector unit_vector_x_axis;
+extern const vector unit_vector_y_axis;
+extern const vector unit_vector_z_axis;
+
 #endif
