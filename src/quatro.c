@@ -77,13 +77,6 @@ float_number vector_unit_dir(vector* unitResult, const vector* A)
 
 void vector_parallel_component(vector* C, const vector* A, const vector* B)
 {
-	// skip completely if B is zero vector
-	if(is_zero_vector(B))
-	{
-		(*C) = zero_vector;
-		return;
-	}
-
 	// get unit vector in direction of B
 	vector unit_B = {};
 	vector_unit_dir(&unit_B, B);
@@ -94,17 +87,15 @@ void vector_parallel_component(vector* C, const vector* A, const vector* B)
 
 void vector_perpendicular_component(vector* C, const vector* A, const vector* B)
 {
-	// skip completely if B is zero vector
-	if(is_zero_vector(B))
-	{
-		(*C) = zero_vector;
-		return;
-	}
-
 	// here, we get parallel componnet of A
 	vector parallel_component = {};
 	vector_parallel_component(&parallel_component, A, B);
 
 	// C = A - component of A parallel to B = component of A perpendicular to B
 	vector_sub(C, A, &parallel_component);
+}
+
+float_number angle_between_vectors(const vector* A, const vector* B)
+{
+
 }

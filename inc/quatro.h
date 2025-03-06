@@ -61,6 +61,7 @@ void vector_parallel_component(vector* C, const vector* A, const vector* B);
 void vector_perpendicular_component(vector* C, const vector* A, const vector* B);
 
 // returns angle between vectors in radians
+// does not work if A or B are zero vectors
 float_number angle_between_vectors(const vector* A, const vector* B);
 
 // --------------------------------------------------------------------------------
