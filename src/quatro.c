@@ -97,5 +97,29 @@ void vector_perpendicular_component(vector* C, const vector* A, const vector* B)
 
 float_number angle_between_vectors(const vector* A, const vector* B)
 {
+	// get unit vectos in both the directions
+	vector unit_A;
+	vector_unit_dir(&unitA, A);
 
+	vector unit_B;
+	vector_unit_dir(&unitB, B);
+
+	// find out angle sines and cosines
+	vector A_cross_B = {};
+	vector_cross_prod(&A_cross_B, unit_A, unit_B);
+	float_number angle_sine = vector_magnitude(&A_cross_B);
+
+	float_number angle_cosine = vector_dot_prod(unit_A, unit_B);
+
+	// find the actual angle using the angle_sine and angle_cosine
+	float_number angle = arcsine(angle_sine);
+	if(angle_cosine < 0)
+	{
+		if(angle >= 0)
+			angle += M_PI;
+		else
+			angle -= M_PI;
+	}
+
+	return angle;
 }
