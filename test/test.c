@@ -10,8 +10,8 @@ void print_vector(vector v)
 
 int main()
 {
-	vector v1 = {0,1,0};
-	vector v2 = {1,0,0};
+	vector v1 = {1,0,0};
+	vector v2 = {0,-1,0};
 	print_vector(v1);
 	print_vector(v2);
 	printf("->%f\n", angle_between_vectors(&v1, &v2) * 180 / M_PI);
