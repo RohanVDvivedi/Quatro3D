@@ -93,3 +93,17 @@ void vector_perpendicular_component(vector* C, const vector* A, const vector* B)
 	// C = A - component of A parallel to B = component of A perpendicular to B
 	vector_sub(C, A, &parallel_component);
 }
+
+void compose_quaternion(quaternion* res, float angle, const vector* axis)
+{
+	float_number sine_by_2 = sine(angle / 2);
+	float_number cosine_by_2 = cosine(angle / 2);
+
+	vector unit_axis;
+	vector_unit_dir(&unit_axis, axis);
+
+	res->sc = cosine_by_2;
+	res->xi = sine_by_2 * unit_axis.xi;
+	res->yj = sine_by_2 * unit_axis.yj;
+	res->zk = sine_by_2 * unit_axis.zk;
+}

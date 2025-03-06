@@ -76,4 +76,7 @@ struct quaternion
 	float_number zk;
 };
 
+// compose a quaternion, representing an angle of rotation about the given axis
+void compose_quaternion(quaternion* res, float angle, const vector* axis);
+
 #endif
