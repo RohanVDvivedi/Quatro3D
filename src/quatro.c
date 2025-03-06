@@ -115,10 +115,10 @@ float_number angle_between_vectors(const vector* A, const vector* B)
 	float_number angle = arcsine(angle_sine);
 	if(angle_cosine < 0)
 	{
-		if(angle >= 0)
-			angle += M_PI;
-		else
-			angle -= M_PI;
+		if(angle_sine > 0)
+			angle = M_PI - angle;
+		else if(angle_sine < 0)
+			angle = -M_PI - angle;
 	}
 
 	return angle;
