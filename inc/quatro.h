@@ -60,10 +60,6 @@ void vector_parallel_component(vector* C, const vector* A, const vector* B);
 // does not work with B as zero_vector, as then B would not have a direction
 void vector_perpendicular_component(vector* C, const vector* A, const vector* B);
 
-// returns angle between vectors (from A rotating towards B in plane defined by vector A cross B) in radians
-// does not work if A or B are zero vectors
-float_number angle_between_vectors(const vector* A, const vector* B);
-
 // --------------------------------------------------------------------------------
 
 // QUATERNION 3D (for rotation)
