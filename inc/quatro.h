@@ -7,16 +7,6 @@
 	#define float_number float
 #endif
 
-// below 6 macros are chat-gpt generated for language agnostic version of the trigonometric functions
-
-#define sine(x)  _Generic((x), float: sinf, double: sin, long double: sinl)(x)
-#define cosine(x) _Generic((x), float: cosf, double: cos, long double: cosl)(x)
-#define tangent(x) _Generic((x), float: tanf, double: tan, long double: tanl)(x)
-
-#define arcsine(x)  _Generic((x), float: asinf, double: asin, long double: asinl)(x)
-#define arccosine(x) _Generic((x), float: acosf, double: acos, long double: acosl)(x)
-#define arctangent(x) _Generic((x), float: atanf, double: atan, long double: atanl)(x)
-
 // --------------------------------------------------------------------------------
 
 // VECTOR 3D
@@ -69,6 +59,9 @@ void vector_parallel_component(vector* C, const vector* A, const vector* B);
 // C = component of A perpendicular to B
 // does not work with B as zero_vector, as then B would not have a direction
 void vector_perpendicular_component(vector* C, const vector* A, const vector* B);
+
+// returns angle between vectors in radians
+float_number angle_between_vectors(const vector* A, const vector* B);
 
 // --------------------------------------------------------------------------------
 

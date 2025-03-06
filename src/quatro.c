@@ -1,5 +1,19 @@
 #include<quatro.h>
 
+#ifndef M_PI
+	#define M_PI ((float_number)(3.141592653589793238L))
+#endif
+
+// below 6 macros are chat-gpt generated for language agnostic version of the trigonometric functions
+
+#define sine(x)  _Generic((x), float: sinf, double: sin, long double: sinl)(x)
+#define cosine(x) _Generic((x), float: cosf, double: cos, long double: cosl)(x)
+#define tangent(x) _Generic((x), float: tanf, double: tan, long double: tanl)(x)
+
+#define arcsine(x)  _Generic((x), float: asinf, double: asin, long double: asinl)(x)
+#define arccosine(x) _Generic((x), float: acosf, double: acos, long double: acosl)(x)
+#define arctangent(x) _Generic((x), float: atanf, double: atan, long double: atanl)(x)
+
 const vector zero_vector = {.xi = 0.0, .yj = 0.0, .zk = 0.0};
 const vector unit_vector_x_axis = {.xi = 1.0, .yj = 0.0, .zk = 0.0};
 const vector unit_vector_y_axis = {.xi = 0.0, .yj = 1.0, .zk = 0.0};
