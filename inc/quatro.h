@@ -24,6 +24,9 @@ extern const vector unit_vector_x_axis;
 extern const vector unit_vector_y_axis;
 extern const vector unit_vector_z_axis;
 
+// if al the 3 components of vector are 0
+int is_zero_vector(const vector* A);
+
 // C = A + B
 void vector_sum(vector* C, const vector* A, const vector* B);
 
@@ -48,6 +51,14 @@ float_number vector_magnitude(const vector* A);
 // get a unit_vector in direction of A in unitResult
 // returns magnitude in return value, unitResult is not correct if magnitude returned is 0
 float_number vector_unit_dir(vector* unitResult, const vector* A);
+
+// C = component of A parallel to B
+// does not work with B as zero_vector, as then B would not have a direction
+void vector_parallel_component(vector* C, const vector* A, const vector* B);
+
+// C = component of A perpendicular to B
+// does not work with B as zero_vector, as then B would not have a direction
+void vector_perpendicular_component(vector* C, const vector* A, const vector* B);
 
 // --------------------------------------------------------------------------------
 
