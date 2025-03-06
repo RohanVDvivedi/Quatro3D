@@ -70,15 +70,14 @@ float_number vector_magnitude(const vector* A)
 float_number vector_unit_dir(vector* unitResult, const vector* A)
 {
 	float_number magnitude = vector_magnitude(A);
-	if(magnitude != 0.0)
-		vector_mul_scalar(unitResult, A, 1.0 / magnitude);
+	vector_mul_scalar(unitResult, A, 1.0 / magnitude);
 	return magnitude;
 }
 
 void vector_parallel_component(vector* C, const vector* A, const vector* B)
 {
 	// get unit vector in direction of B
-	vector unit_B = {};
+	vector unit_B;
 	vector_unit_dir(&unit_B, B);
 
 	// multiply magnitude and the direction, magnitude of this new vector is A.unitB
@@ -88,7 +87,7 @@ void vector_parallel_component(vector* C, const vector* A, const vector* B)
 void vector_perpendicular_component(vector* C, const vector* A, const vector* B)
 {
 	// here, we get parallel componnet of A
-	vector parallel_component = {};
+	vector parallel_component;
 	vector_parallel_component(&parallel_component, A, B);
 
 	// C = A - component of A parallel to B = component of A perpendicular to B
@@ -99,17 +98,17 @@ float_number angle_between_vectors(const vector* A, const vector* B)
 {
 	// get unit vectos in both the directions
 	vector unit_A;
-	vector_unit_dir(&unitA, A);
+	vector_unit_dir(&unit_A, A);
 
 	vector unit_B;
-	vector_unit_dir(&unitB, B);
+	vector_unit_dir(&unit_B, B);
 
 	// find out angle sines and cosines
-	vector A_cross_B = {};
-	vector_cross_prod(&A_cross_B, unit_A, unit_B);
+	vector A_cross_B;
+	vector_cross_prod(&A_cross_B, &unit_A, &unit_B);
 	float_number angle_sine = vector_magnitude(&A_cross_B);
 
-	float_number angle_cosine = vector_dot_prod(unit_A, unit_B);
+	float_number angle_cosine = vector_dot_prod(&unit_A, &unit_B);
 
 	// find the actual angle using the angle_sine and angle_cosine
 	float_number angle = arcsine(angle_sine);
