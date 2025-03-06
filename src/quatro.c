@@ -47,3 +47,11 @@ float_number vector_magnitude(const vector* A);
 {
 	return sqrt(vector_magnitude_squared(A));
 }
+
+float_number vector_unit_dir(vector* unitResult, const vector* A);
+{
+	float_number magnitude = vector_magnitude(A);
+	if(magnitude != 0.0)
+		multiply_scalar(unitResult, A, 1.0 / magnitude);
+	return magnitude;
+}

@@ -45,6 +45,10 @@ float_number vector_magnitude_squared(const vector* A);
 // returns value sqrt(A.A)
 float_number vector_magnitude(const vector* A);
 
+// get a unit_vector in direction of A in unitResult
+// returns magnitude in return value, unitResult is not correct if magnitude returned is 0
+float_number vector_unit_dir(vector* unitResult, const vector* A);
+
 // --------------------------------------------------------------------------------
 
 // QUATERNION 3D (for rotation)
