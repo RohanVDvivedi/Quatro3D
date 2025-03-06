@@ -37,3 +37,13 @@ float_number vector_dot_prod(const vector* A, const vector* B)
 {
 	return (A->xi * B->xi) + (A->yj * B->yj) + (A->zk * B->zk);
 }
+
+float_number vector_magnitude_squared(const vector* A)
+{
+	return dot(A, A);
+}
+
+float_number vector_magnitude(const vector* A);
+{
+	return sqrt(vector_magnitude_squared(A));
+}

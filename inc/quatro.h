@@ -39,6 +39,12 @@ void vector_cross_prod(vector* C, const vector* A, const vector* B);
 // return value A.B
 float_number vector_dot_prod(const vector* A, const vector* B);
 
+// returns value A.A
+float_number vector_magnitude_squared(const vector* A);
+
+// returns value sqrt(A.A)
+float_number vector_magnitude(const vector* A);
+
 // --------------------------------------------------------------------------------
 
 // QUATERNION 3D (for rotation)
