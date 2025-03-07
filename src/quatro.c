@@ -179,7 +179,7 @@ float_number decompose_quaternion(vector* axis, const quaternion* Q)
 	if(is_zero_vector(axis)) // an identity_quaternion will have axis as a zero vector, so give it a random unit vector
 		(*axis) = unit_vector_x_axis;
 	else
-		make_unit_vector(&axis);
+		make_unit_vector(axis);
 
 	// return the angle
 	return 2 * arccosine(Q->sc);
