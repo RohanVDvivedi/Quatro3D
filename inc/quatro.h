@@ -108,4 +108,8 @@ void quaternion_conjugate(quaternion* res, const quaternion* Q);
 // in rotation terms they both represent the same rotation but in opposite direction
 void quaternion_reciprocal(quaternion* res, const quaternion* Q);
 
+// hamiltonian product of 2 quaternions A and B to give C
+// C = A x B
+void quaternion_hamilton_prod(quaternion* C, quaternion* A, quaternion* B);
+
 #endif

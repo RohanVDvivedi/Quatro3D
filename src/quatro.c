@@ -172,3 +172,11 @@ void quaternion_reciprocal(quaternion* res, const quaternion* Q)
 	res->yj = -Q->yj / magnitude_squared;
 	res->zk = -Q->zk / magnitude_squared;
 }
+
+void quaternion_hamilton_prod(quaternion* C, quaternion* A, quaternion* B)
+{
+	C->sc = (A->sc * B->sc) - (A->xi * B->xi) - (A->yj * B->yj) - (A->zk * B->zk);
+	C->xi = (A->sc * B->xi) + (A->xi * B->sc) + (A->yj * B->zk) - (A->zk * B->yj);
+	C->yj = (A->sc * B->yj) - (A->xi * B->zk) + (A->yj * B->sc) + (A->zk * B->xi);
+	C->zk = (A->sc * B->zk) + (A->xi * B->yj) - (A->yj * B->xi) + (A->zk * B->sc);
+}
