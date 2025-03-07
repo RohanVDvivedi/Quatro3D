@@ -1,7 +1,4 @@
 * convert to unit_vector in a single function call
-* is_unit_vector() -> magnitude = 1
-* is_valid_quaternion() -> magnitude = 1
-* in vector_*_component take A, unit_dir as input
-* decrease calls to vector_unit_dir function calls
+* is_unit_quaternion() -> magnitude = 1
 * function to get angle from axis and 2 different vector directions
 * further development of quaternion functions from quadf32
