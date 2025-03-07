@@ -92,4 +92,7 @@ float_number quaternion_magnitude_squared(const quaternion* Q);
 // sqrt(output of above function)
 float_number quaternion_magnitude(const quaternion* Q);
 
+// quaternion_magnitude(A) == 1.0
+int is_unit_quaternion(const vector* Q);
+
 #endif
