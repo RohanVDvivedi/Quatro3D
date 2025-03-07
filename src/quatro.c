@@ -4,6 +4,9 @@
 	#define M_PI ((float_number)(3.141592653589793238L))
 #endif
 
+#define UNIT_VALUE ((float_number)(1.0L))
+#define EQUALITY_TOLERANCE ((float_number)(0.00001L))
+
 // below 6 macros are chat-gpt generated for language agnostic version of the trigonometric functions
 
 #define sine(x)  _Generic((x), float: sinf, double: sin, long double: sinl)(x)
