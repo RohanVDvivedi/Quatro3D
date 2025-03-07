@@ -98,4 +98,14 @@ float_number quaternion_magnitude(const quaternion* Q);
 // quaternion_magnitude(A) == 1.0
 int is_unit_quaternion(const quaternion* Q);
 
+// at the end of this function res is same as Q, but with the xi, yj and zk with opposite sign\
+// res = [Q->sc, -Q->xi, -Q->yj, -Q->zk]
+void quaternion_conjugate(quaternion* res, const quaternion* Q);
+
+// this is reciprocal of Q, hamiltonian product of quaternion and its reciprocal is identity_quaternion
+// res = quaternion_conjugate / quaternion_magnitude
+// for a unit_quaternion, reciprocal and conjugate are the same thing
+// in rotation terms they both represent the same rotation but in opposite direction
+void quaternion_reciprocal(quaternion* res, const quaternion* Q);
+
 #endif
