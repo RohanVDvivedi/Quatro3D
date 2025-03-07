@@ -66,7 +66,7 @@ void vector_perpendicular_component(vector* C, vector* parallel_component, const
 
 // figures out the angle of rotation about unit_axis, require to move unit vector from Ai to Af
 // if a solution could not be found then NAN is returned
-float_number angle_between_2_vectors(const vector& unit_axis, const vector* unit_Ai, const vector* unit_Af);
+float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit_Ai, const vector* unit_Af);
 
 // --------------------------------------------------------------------------------
 

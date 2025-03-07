@@ -105,6 +105,27 @@ void vector_perpendicular_component(vector* C, vector* parallel_component, const
 	vector_sub(C, A, parallel_component);
 }
 
+float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit_Ai, const vector* unit_Af)
+{
+	// find perpendicular and parallel components in unit_axis direction -> subscript p for paralle and pp for perpendicular
+	vector unit_Ai_p;
+	vector unit_Ai_pp;
+	vector_perpendicular_component(&unit_Ai_pp, &unit_Ai_p, unit_Ai, unit_axis);
+	vector unit_Af_p;
+	vector unit_Af_pp;
+	vector_perpendicular_component(&unit_Af_pp, &unit_Af_p, unit_Af, unit_axis);
+
+	// vector remains unchanges in parallel to the unit_axis direction, so magnitudes must match
+	{
+		float_number aip_mag = vector_magnitude(&unit_Ai_p);
+		float_number afp_mag = vector_magnitude(&unit_Af_p);
+		if(!(((aip_mag - EQUALITY_TOLERANCE) < afp_mag) && (afp_mag < ((aip_mag + EQUALITY_TOLERANCE)))))
+			return NAN;
+	}
+
+	// TODO
+}
+
 const quaternion identity_quaternion = {.sc = 1.0, .xi = 0.0, .yj = 0.0, .zk = 0.0};
 
 void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis)
