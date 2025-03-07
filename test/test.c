@@ -175,5 +175,9 @@ int main()
 	test_rotations((vector){3.0, 2.02, 3.3}, 2.5, (vector){1.0, 0.4, 3.9});
 	test_rotations((vector){2.0, 2.01, 3.2}, -2.5, (vector){1.0, 0.4, 3.9});
 
+	printf("-------------------NOW WORKING IN ONLY X-Y PLANE---------------------------\n\n");
+	for(float f = -M_PI; f <= M_PI + 0.1; f += M_PI/6)
+		test_rotations((vector){0, 0, 1}, f, (vector){1, 0, 0});
+
 	return 0;
 }
