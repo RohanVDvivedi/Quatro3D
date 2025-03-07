@@ -58,6 +58,10 @@ float_number vector_magnitude(const vector* A);
 // returns magnitude in return value, unitResult is not correct if magnitude returned is 0
 float_number vector_unit_dir(vector* unit_A, const vector* A);
 
+// convert vector to unit vector in place
+// returns magnitude of the vector
+float_number make_unit_vector(vector* A);
+
 // C = component of A parallel to unit_dir
 // unit_dir must be a unit vector
 void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir);

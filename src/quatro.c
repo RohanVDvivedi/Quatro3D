@@ -91,6 +91,14 @@ float_number vector_unit_dir(vector* unit_A, const vector* A)
 	return magnitude;
 }
 
+float_number make_unit_vector(vector* A)
+{
+	float_number magnitude = vector_magnitude(A);
+	// below line of code represents an element by element division so it is just safe to do it, kindly avoid this in user space code
+	vector_mul_scalar(A, A, UNIT_VALUE / magnitude);
+	return magnitude;
+}
+
 void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir)
 {
 	// multiply magnitude and the direction, magnitude of this new vector is A.unitB
