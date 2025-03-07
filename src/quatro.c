@@ -105,6 +105,8 @@ void vector_perpendicular_component(vector* C, vector* parallel_component, const
 	vector_sub(C, A, parallel_component);
 }
 
+const quaternion identity_quaternion = {.sc = 1.0, .xi = 0.0, .yj = 0.0, .zk = 0.0};
+
 void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis)
 {
 	float_number sine_by_2 = sine(angle / 2);

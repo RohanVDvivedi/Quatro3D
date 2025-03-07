@@ -80,6 +80,9 @@ struct quaternion
 	float_number zk;
 };
 
+// this is identity quaternion it represents no rotation
+extern const quaternion identity_quaternion;
+
 // compose a quaternion, representing an angle of rotation about the given unit_axis (which must be a unit_vector)
 void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis);
 
