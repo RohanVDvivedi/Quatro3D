@@ -72,5 +72,6 @@ int main()
 	test_vector_components((vector){-3.0, 2.5, 2.6}, unit_vector_y_axis);
 	test_vector_components((vector){-3.0, 2.5, 2.6}, (vector){9.3, 1.3, -7.3});
 	test_quaternion_compose_decompose(-2.5, (vector){3.0, 1.5, -7.6});
+	test_quaternion_compose_decompose(-1.5, (vector){2.0, -2.5, 3.6});
 	return 0;
 }
