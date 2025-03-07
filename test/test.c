@@ -168,7 +168,12 @@ int main()
 
 	test_hamiltonian_product_rules((quaternion){1.9, -3.11, 5.13, -7.15}, (quaternion){13, 11, 9, -7}, (quaternion){1, -15, 5, -35});
 
-	test_rotations((vector){1.0, 2.0, 3.0}, 1.5, (vector){1.0, 0.4, 3.9});
+	test_rotations((vector){1.0, 2.0, 3.1}, 1.5, (vector){1.0, 0.4, 3.9});
+	test_rotations((vector){2.0, 2.8, 3.2}, -1.5, (vector){1.0, 0.4, 3.9});
+	test_rotations((vector){1.0, 2.8, 3.3}, 0.5, (vector){1.0, 0.4, 3.9});
+	test_rotations((vector){2.0, 2.06, 3.4}, -0.5, (vector){1.0, 0.4, 3.9});
+	test_rotations((vector){3.0, 2.02, 3.3}, 2.5, (vector){1.0, 0.4, 3.9});
+	test_rotations((vector){2.0, 2.01, 3.2}, -2.5, (vector){1.0, 0.4, 3.9});
 
 	return 0;
 }
