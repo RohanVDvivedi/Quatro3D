@@ -129,7 +129,25 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 			return NAN;
 	}
 
-	// TODO
+	// now just forget about the parallel components
+	// all we need to do is find angle between perpedicular components
+
+	float_number A_dot = vector_dot_prod(&unit_Ai_pp, &unit_Af_pp);
+	// convert dot product into cosine of the angle
+	A_dot /= magnitude_squared(&unit_Ai_pp);
+	vector A_cross;
+	vector_dot_prod(&A_cross, &unit_Ai_pp, &unit_Af_pp);
+	// make A_cross unit vector
+	{
+		vector temp = A_cross;
+		vector_unit_dir(&A_cross, &temp);
+	}
+
+	float_number angle = arccosine(A_dot);
+	if(!are_equal_vectors(A_cross, unit_axis))
+		angle = -angle;
+
+	return angle;
 }
 
 const quaternion identity_quaternion = {.sc = 1.0, .xi = 0.0, .yj = 0.0, .zk = 0.0};
