@@ -8,18 +8,29 @@ void print_vector(vector v)
 	printf("(%f %f %f)", v.xi, v.yj, v.zk);
 }
 
+void print_quaternion(quaternion q)
+{
+	printf("(%f %f %f %f)", q.sc, q.xi, q.yj, q.zk);
+}
+
 void test_quaternion_compose_decompose(float angle, vector v)
 {
 	printf("TEST : quaternion compose decompose\n");
 
+	print_vector(v); printf("is v unit %d\n", is_unit_vector(&v));
+
 	vector axis;
 	vector_unit_dir(&axis, &v);
 
-	print_vector(axis);
-	printf("%f\n", angle);
+	printf("is axis unit %d\n", is_unit_vector(&axis));
+
+	print_vector(axis);printf(" is axis unit %d ", is_unit_vector(&axis));
+	printf(", angle = %f\n", angle);
 
 	quaternion q;
 	compose_quaternion(&q, angle, &axis);
+
+	print_quaternion(q);printf(" is unit = %d\n", is_unit_quaternion(&q));
 
 	angle = 0;
 	axis = (vector){};
@@ -46,10 +57,11 @@ void test_vector_components(vector v, vector dir_for_v)
 	vector perpendicular;
 	vector_perpendicular_component(&perpendicular, &parallel, &v, &dir);
 
-	printf("vec : "); print_vector(v); printf("\n");
-	printf("dir : "); print_vector(dir_for_v); printf("\n");
-	printf("||| : "); print_vector(parallel); printf("\n");
-	printf("_|_ : "); print_vector(perpendicular); printf("\n");
+	printf("vec : "); print_vector(v); printf(" is_unit = %d\n", is_unit_vector(&v));
+	printf("dov : "); print_vector(dir_for_v); printf(" is_unit = %d\n", is_unit_vector(&dir_for_v));
+	printf("dir : "); print_vector(dir); printf(" is_unit = %d\n", is_unit_vector(&dir));
+	printf("||| : "); print_vector(parallel); printf(" is_unit = %d\n", is_unit_vector(&parallel));
+	printf("_|_ : "); print_vector(perpendicular); printf(" is_unit = %d\n", is_unit_vector(&perpendicular));
 
 	printf("\n");
 }
