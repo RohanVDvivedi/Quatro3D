@@ -1,3 +1,4 @@
+* float_number agnostic value of sqrt function
 * convert to unit_vector in a single function call
 * is_unit_quaternion() -> magnitude = 1
 * function to get angle from axis and 2 different vector directions
