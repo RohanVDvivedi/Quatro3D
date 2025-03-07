@@ -118,6 +118,10 @@ void quaternion_reciprocal(quaternion* res, const quaternion* Q);
 // hamiltonian product of 2 quaternions A and B to give C
 // C = A x B
 // also A x B = C * D, then (C^-1) x A x B = D and A x B x (D^-1) = C
-void quaternion_hamilton_prod(quaternion* C, quaternion* A, quaternion* B);
+void quaternion_hamilton_prod(quaternion* C, const quaternion* A, const quaternion* B);
+
+// get result vector after rotating Ai by Quaternion Q
+// same as Q x Ai x (Q^-1)
+void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai);
 
 #endif

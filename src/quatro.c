@@ -134,9 +134,9 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 
 	float_number A_dot = vector_dot_prod(&unit_Ai_pp, &unit_Af_pp);
 	// convert dot product into cosine of the angle
-	A_dot /= magnitude_squared(&unit_Ai_pp);
+	A_dot /= vector_magnitude_squared(&unit_Ai_pp);
 	vector A_cross;
-	vector_dot_prod(&A_cross, &unit_Ai_pp, &unit_Af_pp);
+	vector_cross_prod(&A_cross, &unit_Ai_pp, &unit_Af_pp);
 	// make A_cross unit vector
 	{
 		vector temp = A_cross;
@@ -144,7 +144,7 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 	}
 
 	float_number angle = arccosine(A_dot);
-	if(!are_equal_vectors(A_cross, unit_axis))
+	if(!are_equal_vectors(&A_cross, unit_axis))
 		angle = -angle;
 
 	return angle;
@@ -218,10 +218,31 @@ void quaternion_reciprocal(quaternion* res, const quaternion* Q)
 	res->zk = -Q->zk / magnitude_squared;
 }
 
-void quaternion_hamilton_prod(quaternion* C, quaternion* A, quaternion* B)
+void quaternion_hamilton_prod(quaternion* C, const quaternion* A, const quaternion* B)
 {
 	C->sc = (A->sc * B->sc) - (A->xi * B->xi) - (A->yj * B->yj) - (A->zk * B->zk);
 	C->xi = (A->sc * B->xi) + (A->xi * B->sc) + (A->yj * B->zk) - (A->zk * B->yj);
 	C->yj = (A->sc * B->yj) - (A->xi * B->zk) + (A->yj * B->sc) + (A->zk * B->xi);
 	C->zk = (A->sc * B->zk) + (A->xi * B->yj) - (A->yj * B->xi) + (A->zk * B->sc);
+}
+
+void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai)
+{
+	//quaternion Q_reciprocal;
+	//quaternion_reciprocal(Q_reciprocal, Q);
+	// since we know that the Q is a unit quaternion, we can use the conjuagte instead
+	quaternion Q_conjugate;
+	quaternion_conjugate(&Q_conjugate, Q);
+
+	quaternion AI = {.sc = 0, .xi = Ai->xi, .yj = Ai->yj, .zk = Ai->zk};
+	quaternion AF;
+
+	// Q * Ai * (Q^-1)
+	{
+		quaternion t1;
+		quaternion_hamilton_prod(&t1, Q, &AI);
+		quaternion_hamilton_prod(&AF, &t1, &Q_conjugate);
+	}
+
+	(*Af) = (vector){.xi = AF.xi, .yj = AF.yj, .zk = AF.zk};
 }
