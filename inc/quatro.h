@@ -9,6 +9,8 @@
 
 // --------------------------------------------------------------------------------
 
+// NOTE :: parameter names containing *unit* in their names must be unit vectors
+
 // VECTOR 3D
 
 typedef struct vector vector;
