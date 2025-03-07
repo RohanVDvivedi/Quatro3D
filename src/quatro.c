@@ -120,7 +120,7 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 	{
 		float_number aip_mag = vector_magnitude(&unit_Ai_p);
 		float_number afp_mag = vector_magnitude(&unit_Af_p);
-		if(!return are_float_numbers_equal(aip_mag, afp_mag))
+		if(!are_float_numbers_equal(aip_mag, afp_mag))
 			return NAN;
 	}
 
