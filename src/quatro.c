@@ -143,7 +143,7 @@ float_number quaternion_magnitude(const quaternion* Q)
 	return sqroot(quaternion_magnitude_squared(Q));
 }
 
-int is_unit_quaternion(const vector* Q)
+int is_unit_quaternion(const quaternion* Q)
 {
 	float_number magnitude = quaternion_magnitude(Q);
 	return ((UNIT_VALUE - EQUALITY_TOLERANCE) <= magnitude) && (magnitude <= (UNIT_VALUE + EQUALITY_TOLERANCE));
