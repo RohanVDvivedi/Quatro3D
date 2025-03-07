@@ -97,6 +97,39 @@ void test_conjugate_and_reciprocal(quaternion q)
 	printf("\n");
 }
 
+void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
+{
+	quaternion A_times_B;
+	quaternion_hamilton_prod(&A_times_B, &A, &B);
+
+	quaternion C_1;
+	quaternion_reciprocal(&C_1, &C);
+
+	quaternion D;
+	quaternion_hamilton_prod(&D, &C_1, &A_times_B);
+
+	quaternion D_1;
+	quaternion_reciprocal(&D_1, &D);
+
+	quaternion C_times_D;
+	quaternion_hamilton_prod(&C_times_D, &C, &D);
+
+	printf("A : "); print_quaternion(A); printf("\n");
+	printf("B : "); print_quaternion(B); printf("\n");
+	printf("C : "); print_quaternion(C); printf("\n");
+	printf("D : "); print_quaternion(D); printf("\n");
+	printf("D = (C^-1) * A * B, then below 2 must be equal\n");
+	printf("A * B : "); print_quaternion(A_times_B); printf("\n");
+	printf("C * D : "); print_quaternion(C_times_D); printf("\n");
+
+	printf("also then A * B * (D^-1) = C, lhs is given below\n");
+	quaternion lhs;
+	quaternion_hamilton_prod(&lhs, &A_times_B, &D_1);
+	printf("lsh from above = "); print_quaternion(lhs); printf("\n");
+
+	printf("\n");
+}
+
 int main()
 {
 	test_vector_components((vector){3.9, 1.9, -1.6}, (vector){2.0, 2.5, -2.6});
@@ -108,6 +141,8 @@ int main()
 
 	test_conjugate_and_reciprocal((quaternion){-1.9, -3.11, 5.13, 7.15});
 	test_conjugate_and_reciprocal((quaternion){1.9, -3.11, 5.13, -7.15});
+
+	test_hamiltonian_product_rules((quaternion){1.9, -3.11, 5.13, -7.15}, (quaternion){13, 11, 9, -7}, (quaternion){1, -15, 5, -35});
 
 	return 0;
 }
