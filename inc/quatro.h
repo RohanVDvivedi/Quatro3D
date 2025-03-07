@@ -53,7 +53,7 @@ float_number vector_magnitude(const vector* A);
 
 // get a unit_vector in direction of A in unitResult
 // returns magnitude in return value, unitResult is not correct if magnitude returned is 0
-float_number vector_unit_dir(vector* unitResult, const vector* A);
+float_number vector_unit_dir(vector* unit_A, const vector* A);
 
 // C = component of A parallel to B
 // does not work with B as zero_vector, as then B would not have a direction

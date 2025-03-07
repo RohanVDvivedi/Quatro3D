@@ -76,10 +76,10 @@ float_number vector_magnitude(const vector* A)
 	return sqrt(vector_magnitude_squared(A));
 }
 
-float_number vector_unit_dir(vector* unitResult, const vector* A)
+float_number vector_unit_dir(vector* unit_A, const vector* A)
 {
 	float_number magnitude = vector_magnitude(A);
-	vector_mul_scalar(unitResult, A, 1.0 / magnitude);
+	vector_mul_scalar(unit_A, A, UNIT_VALUE / magnitude);
 	return magnitude;
 }
 
