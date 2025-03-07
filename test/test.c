@@ -148,6 +148,9 @@ void test_rotations(vector axis, float angle, vector vi)
 	rotate_by_quaternion(&vf, &q, &vi);
 	printf("vf : "); print_vector(vf); printf(" mag = %f \n", vector_magnitude(&vf));
 
+	// TODO
+	// printf("calculate angle from axis and vi and vf = %f\n", angle_between_2_vectors());
+
 	printf("\n");
 }
 
