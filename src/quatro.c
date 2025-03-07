@@ -36,6 +36,11 @@ int is_unit_vector(const vector* A)
 	return are_float_numbers_equal(UNIT_VALUE, magnitude);
 }
 
+int are_equal_vectors(const vector* A, const vector* B)
+{
+	return are_float_numbers_equal(A->xi, B->xi) && are_float_numbers_equal(A->yj, B->yj) && are_float_numbers_equal(A->zk, B->zk);
+}
+
 void vector_sum(vector* C, const vector* A, const vector* B)
 {
 	C->xi = A->xi + B->xi;
