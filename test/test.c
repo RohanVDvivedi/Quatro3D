@@ -40,14 +40,14 @@ void test_vector_components(vector v, vector dir_for_v)
 	printf("TEST : vector components\n");
 
 	vector dir;
-	vector_unit_dir(&dir, &v);
+	vector_unit_dir(&dir, &dir_for_v);
 
 	vector parallel;
 	vector perpendicular;
 	vector_perpendicular_component(&perpendicular, &parallel, &v, &dir);
 
 	printf("vec : "); print_vector(v); printf("\n");
-	printf("dir : "); print_vector(dir); printf("\n");
+	printf("dir : "); print_vector(dir_for_v); printf("\n");
 	printf("||| : "); print_vector(parallel); printf("\n");
 	printf("_|_ : "); print_vector(perpendicular); printf("\n");
 
