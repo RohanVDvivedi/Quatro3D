@@ -93,6 +93,8 @@ void test_conjugate_and_reciprocal(quaternion q)
 	quaternion q_r_times_q;
 	quaternion_hamilton_prod(&q_r_times_q, &q_r, &q);
 	printf("q_r * q : "); print_quaternion(q_r_times_q); printf("\n");
+
+	printf("\n");
 }
 
 int main()
@@ -104,7 +106,8 @@ int main()
 	test_quaternion_compose_decompose(-2.5, (vector){3.0, 1.5, -7.6});
 	test_quaternion_compose_decompose(-1.5, (vector){2.0, -2.5, 3.6});
 
-	test_conjugate_and_reciprocal((quaternion){1.9, 3.11, 5.13, 7.15});
+	test_conjugate_and_reciprocal((quaternion){-1.9, -3.11, 5.13, 7.15});
+	test_conjugate_and_reciprocal((quaternion){1.9, -3.11, 5.13, -7.15});
 
 	return 0;
 }
