@@ -66,12 +66,45 @@ void test_vector_components(vector v, vector dir_for_v)
 	printf("\n");
 }
 
+void test_conjugate_and_reciprocal(quaternion q)
+{
+	printf("q : "); print_quaternion(q); printf("\n");
+
+	quaternion q_c;
+	quaternion_conjugate(&q_c, &q);
+	printf("q_c : "); print_quaternion(q_c); printf("\n");
+
+	quaternion q_r;
+	quaternion_reciprocal(&q_r, &q);
+	printf("q_r : "); print_quaternion(q_r); printf("\n");
+
+	quaternion q_times_q_c;
+	quaternion_hamilton_prod(&q_times_q_c, &q, &q_c);
+	printf("q * q_c : "); print_quaternion(q_times_q_c); printf("\n");
+
+	quaternion q_c_times_q;
+	quaternion_hamilton_prod(&q_c_times_q, &q_c, &q);
+	printf("q_c * q : "); print_quaternion(q_c_times_q); printf("\n");
+
+	quaternion q_times_q_r;
+	quaternion_hamilton_prod(&q_times_q_r, &q, &q_r);
+	printf("q * q_r : "); print_quaternion(q_times_q_r); printf("\n");
+
+	quaternion q_r_times_q;
+	quaternion_hamilton_prod(&q_r_times_q, &q_r, &q);
+	printf("q_r * q : "); print_quaternion(q_r_times_q); printf("\n");
+}
+
 int main()
 {
 	test_vector_components((vector){3.9, 1.9, -1.6}, (vector){2.0, 2.5, -2.6});
 	test_vector_components((vector){-3.0, 2.5, 2.6}, unit_vector_y_axis);
 	test_vector_components((vector){-3.0, 2.5, 2.6}, (vector){9.3, 1.3, -7.3});
+
 	test_quaternion_compose_decompose(-2.5, (vector){3.0, 1.5, -7.6});
 	test_quaternion_compose_decompose(-1.5, (vector){2.0, -2.5, 3.6});
+
+	test_conjugate_and_reciprocal((quaternion){1.9, 3.11, 5.13, 7.15});
+
 	return 0;
 }
