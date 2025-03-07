@@ -86,4 +86,10 @@ void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis);
 // decomposes a auaternion into its angle (return value) and the axis of rotation
 float_number decompose_quaternion(vector* axis, const quaternion* Q);
 
+// sum of squares of components of the quaternion
+float_number quaternion_magnitude_squared(const quaternion* Q);
+
+// sqrt(output of above function)
+float_number quaternion_magnitude(const quaternion* Q);
+
 #endif

@@ -130,3 +130,13 @@ float_number decompose_quaternion(vector* axis, const quaternion* Q)
 	// return the angle
 	return 2 * arccosine(Q->sc);
 }
+
+float_number quaternion_magnitude_squared(const quaternion* Q)
+{
+	return (Q->sc * Q->sc) + (Q->xi * Q->xi) + (Q->yj * Q->yj) + (Q->zk * Q->zk);
+}
+
+float_number quaternion_magnitude(const quaternion* Q)
+{
+	return sqrt(quaternion_magnitude_squared(Q));
+}
