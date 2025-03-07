@@ -27,6 +27,12 @@ int is_zero_vector(const vector* A)
 	return (A->xi == 0.0) && (A->yj == 0.0) && (A->zk == 0.0);
 }
 
+int is_unit_vector(const vector* A)
+{
+	float_number magnitude = vector_magnitude(A);
+	return ((UNIT_VALUE - EQUALITY_TOLERANCE) <= magnitude) && (magnitude <= (UNIT_VALUE + EQUALITY_TOLERANCE));
+}
+
 void vector_sum(vector* C, const vector* A, const vector* B)
 {
 	C->xi = A->xi + B->xi;

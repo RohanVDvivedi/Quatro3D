@@ -24,8 +24,11 @@ extern const vector unit_vector_x_axis;
 extern const vector unit_vector_y_axis;
 extern const vector unit_vector_z_axis;
 
-// if al the 3 components of vector are 0
+// if all the 3 components of vector are 0
 int is_zero_vector(const vector* A);
+
+// |A| == 1.0
+int is_unit_vector(const vector* A);
 
 // C = A + B
 void vector_sum(vector* C, const vector* A, const vector* B);
