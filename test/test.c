@@ -35,14 +35,16 @@ void test_quaternion_compose_decompose(float angle, vector v)
 	printf("\n");
 }
 
-void test_vector_components(vector v, vector dir)
+void test_vector_components(vector v, vector dir_for_v)
 {
 	printf("TEST : vector components\n");
-	vector parallel;
-	vector_parallel_component(&parallel, &v, &dir);
 
+	vector dir;
+	vector_unit_dir(&dir, &v);
+
+	vector parallel;
 	vector perpendicular;
-	vector_perpendicular_component(&perpendicular, &v, &dir);
+	vector_perpendicular_component(&perpendicular, &parallel, &v, &dir);
 
 	printf("vec : "); print_vector(v); printf("\n");
 	printf("dir : "); print_vector(dir); printf("\n");
