@@ -83,23 +83,19 @@ float_number vector_unit_dir(vector* unit_A, const vector* A)
 	return magnitude;
 }
 
-void vector_parallel_component(vector* C, const vector* A, const vector* B)
+void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir)
 {
-	// get unit vector in direction of B
-	vector unit_B;
-	vector_unit_dir(&unit_B, B);
-
 	// multiply magnitude and the direction, magnitude of this new vector is A.unitB
-	vector_mul_scalar(C, &unit_B, vector_dot_prod(A, &unit_B));
+	vector_mul_scalar(C, &unit_dir, vector_dot_prod(A, &unit_dir));
 }
 
-void vector_perpendicular_component(vector* C, const vector* A, const vector* B)
+void vector_perpendicular_component(vector* C, const vector* A, const vector* unit_dir)
 {
-	// here, we get parallel componnet of A
+	// here, we get parallel component of A
 	vector parallel_component;
-	vector_parallel_component(&parallel_component, A, B);
+	vector_parallel_component(&parallel_component, A, unit_dir);
 
-	// C = A - component of A parallel to B = component of A perpendicular to B
+	// C = A - component of A parallel to unit_dir = component of A perpendicular to unit_dir
 	vector_sub(C, A, &parallel_component);
 }
 

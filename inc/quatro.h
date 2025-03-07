@@ -55,13 +55,13 @@ float_number vector_magnitude(const vector* A);
 // returns magnitude in return value, unitResult is not correct if magnitude returned is 0
 float_number vector_unit_dir(vector* unit_A, const vector* A);
 
-// C = component of A parallel to B
-// does not work with B as zero_vector, as then B would not have a direction
-void vector_parallel_component(vector* C, const vector* A, const vector* B);
+// C = component of A parallel to unit_dir
+// unit_dir must be a unit vector
+void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir);
 
 // C = component of A perpendicular to B
-// does not work with B as zero_vector, as then B would not have a direction
-void vector_perpendicular_component(vector* C, const vector* A, const vector* B);
+// unit_dir must be a unit vector
+void vector_perpendicular_component(vector* C, const vector* A, const vector* unit_dir);
 
 // --------------------------------------------------------------------------------
 
