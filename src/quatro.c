@@ -6,6 +6,7 @@
 
 #define UNIT_VALUE ((float_number)(1.0L))
 #define EQUALITY_TOLERANCE ((float_number)(0.00001L))
+#define are_float_numbers_equal(a, b) ((((a) - EQUALITY_TOLERANCE) <= (b)) && ((b) <= ((a) + EQUALITY_TOLERANCE)))
 
 // below 7 macros are chat-gpt generated for language agnostic version of the trigonometric functions
 
@@ -32,7 +33,7 @@ int is_zero_vector(const vector* A)
 int is_unit_vector(const vector* A)
 {
 	float_number magnitude = vector_magnitude(A);
-	return ((UNIT_VALUE - EQUALITY_TOLERANCE) <= magnitude) && (magnitude <= (UNIT_VALUE + EQUALITY_TOLERANCE));
+	return are_float_numbers_equal(UNIT_VALUE, magnitude);
 }
 
 void vector_sum(vector* C, const vector* A, const vector* B)
@@ -119,7 +120,7 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 	{
 		float_number aip_mag = vector_magnitude(&unit_Ai_p);
 		float_number afp_mag = vector_magnitude(&unit_Af_p);
-		if(!(((aip_mag - EQUALITY_TOLERANCE) < afp_mag) && (afp_mag < ((aip_mag + EQUALITY_TOLERANCE)))))
+		if(!return are_float_numbers_equal(aip_mag, afp_mag))
 			return NAN;
 	}
 
@@ -172,7 +173,7 @@ float_number quaternion_magnitude(const quaternion* Q)
 int is_unit_quaternion(const quaternion* Q)
 {
 	float_number magnitude = quaternion_magnitude(Q);
-	return ((UNIT_VALUE - EQUALITY_TOLERANCE) <= magnitude) && (magnitude <= (UNIT_VALUE + EQUALITY_TOLERANCE));
+	return are_float_numbers_equal(UNIT_VALUE, magnitude);
 }
 
 void quaternion_conjugate(quaternion* res, const quaternion* Q)
