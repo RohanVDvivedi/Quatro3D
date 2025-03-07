@@ -103,18 +103,15 @@ void vector_perpendicular_component(vector* C, vector* parallel_component, const
 	vector_sub(C, A, parallel_component);
 }
 
-void compose_quaternion(quaternion* Q, float angle, const vector* axis)
+void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis)
 {
 	float_number sine_by_2 = sine(angle / 2);
 	float_number cosine_by_2 = cosine(angle / 2);
 
-	vector unit_axis;
-	vector_unit_dir(&unit_axis, axis);
-
 	Q->sc = cosine_by_2;
-	Q->xi = sine_by_2 * unit_axis.xi;
-	Q->yj = sine_by_2 * unit_axis.yj;
-	Q->zk = sine_by_2 * unit_axis.zk;
+	Q->xi = sine_by_2 * unit_axis->xi;
+	Q->yj = sine_by_2 * unit_axis->yj;
+	Q->zk = sine_by_2 * unit_axis->zk;
 }
 
 float_number decompose_quaternion(vector* axis, const quaternion* Q)

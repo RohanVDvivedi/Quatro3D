@@ -80,8 +80,8 @@ struct quaternion
 	float_number zk;
 };
 
-// compose a quaternion, representing an angle of rotation about the given axis
-void compose_quaternion(quaternion* Q, float angle, const vector* axis);
+// compose a quaternion, representing an angle of rotation about the given unit_axis (which must be a unit_vector)
+void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis);
 
 // decomposes a auaternion into its angle (return value) and the axis of rotation
 float_number decompose_quaternion(vector* axis, const quaternion* Q);
