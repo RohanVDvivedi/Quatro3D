@@ -132,16 +132,21 @@ void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
 
 void test_rotations(vector axis, float angle, vector vi)
 {
-	printf("vi : "); print_vector(vi); printf(" angle = %f\n", angle);
+	printf("vi : "); print_vector(vi); printf(" mag = %f \n", vector_magnitude(&vi));
 
 	// generate quaternion
+	{
+		vector temp;
+		vector_unit_dir(&axis, &temp);
+	}
+	printf("aixs : "); print_vector(axis); printf(" angle = %f\n", angle);
 	quaternion q;
 	compose_quaternion(&q, angle, &axis);
 	printf("q : "); print_quaternion(q); printf("\n");
 
 	vector vf;
 	rotate_by_quaternion(&vf, &q, &vi);
-	printf("vf : "); print_vector(vf); printf("\n");
+	printf("vf : "); print_vector(vf); printf(" mag = %f \n", vector_magnitude(&vf));
 
 	printf("\n");
 }
