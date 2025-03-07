@@ -146,10 +146,7 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 	vector A_cross;
 	vector_cross_prod(&A_cross, &unit_Ai_pp, &unit_Af_pp);
 	// make A_cross unit vector
-	{
-		vector temp = A_cross;
-		vector_unit_dir(&A_cross, &temp);
-	}
+	make_unit_vector(&A_cross);
 
 	float_number angle = arccosine(A_dot);
 	if(!are_equal_vectors(&A_cross, unit_axis))
@@ -182,10 +179,7 @@ float_number decompose_quaternion(vector* axis, const quaternion* Q)
 	if(is_zero_vector(axis)) // an identity_quaternion will have axis as a zero vector, so give it a random unit vector
 		(*axis) = unit_vector_x_axis;
 	else
-	{
-		vector temp = (*axis);
-		vector_unit_dir(axis, &temp);
-	}
+		make_unit_vector(&axis);
 
 	// return the angle
 	return 2 * arccosine(Q->sc);
