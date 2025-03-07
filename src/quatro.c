@@ -7,7 +7,7 @@
 #define UNIT_VALUE ((float_number)(1.0L))
 #define EQUALITY_TOLERANCE ((float_number)(0.00001L))
 
-// below 6 macros are chat-gpt generated for language agnostic version of the trigonometric functions
+// below 7 macros are chat-gpt generated for language agnostic version of the trigonometric functions
 
 #define sine(x)  _Generic((x), float: sinf, double: sin, long double: sinl)(x)
 #define cosine(x) _Generic((x), float: cosf, double: cos, long double: cosl)(x)
@@ -16,6 +16,8 @@
 #define arcsine(x)  _Generic((x), float: asinf, double: asin, long double: asinl)(x)
 #define arccosine(x) _Generic((x), float: acosf, double: acos, long double: acosl)(x)
 #define arctangent(x) _Generic((x), float: atanf, double: atan, long double: atanl)(x)
+
+#define sqroot(x) _Generic((x), float: sqrtf, double: sqrt, long double: sqrtl)(x)
 
 const vector zero_vector = {.xi = 0.0, .yj = 0.0, .zk = 0.0};
 const vector unit_vector_x_axis = {.xi = 1.0, .yj = 0.0, .zk = 0.0};
@@ -73,7 +75,7 @@ float_number vector_magnitude_squared(const vector* A)
 
 float_number vector_magnitude(const vector* A)
 {
-	return sqrt(vector_magnitude_squared(A));
+	return sqroot(vector_magnitude_squared(A));
 }
 
 float_number vector_unit_dir(vector* unit_A, const vector* A)
@@ -138,5 +140,5 @@ float_number quaternion_magnitude_squared(const quaternion* Q)
 
 float_number quaternion_magnitude(const quaternion* Q)
 {
-	return sqrt(quaternion_magnitude_squared(Q));
+	return sqroot(quaternion_magnitude_squared(Q));
 }
