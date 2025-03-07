@@ -135,11 +135,8 @@ void test_rotations(vector axis, float angle, vector vi)
 	printf("vi : "); print_vector(vi); printf(" mag = %f \n", vector_magnitude(&vi));
 
 	// generate quaternion
-	{
-		vector temp;
-		vector_unit_dir(&axis, &temp);
-	}
-	printf("aixs : "); print_vector(axis); printf(" angle = %f\n", angle);
+	make_unit_vector(&axis);
+	printf("axis : "); print_vector(axis); printf(" angle = %f\n", angle);
 	quaternion q;
 	compose_quaternion(&q, angle, &axis);
 	printf("q : "); print_quaternion(q); printf("\n");
