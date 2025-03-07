@@ -130,6 +130,22 @@ void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
 	printf("\n");
 }
 
+void test_rotations(vector axis, float angle, vector vi)
+{
+	printf("vi : "); print_vector(vi); printf(" angle = %f\n", angle);
+
+	// generate quaternion
+	quaternion q;
+	compose_quaternion(&q, angle, &axis);
+	printf("q : "); print_quaternion(q); printf("\n");
+
+	vector vf;
+	rotate_by_quaternion(&vf, &q, &vi);
+	printf("vf : "); print_vector(vf); printf("\n");
+
+	printf("\n");
+}
+
 int main()
 {
 	test_vector_components((vector){3.9, 1.9, -1.6}, (vector){2.0, 2.5, -2.6});
@@ -143,6 +159,8 @@ int main()
 	test_conjugate_and_reciprocal((quaternion){1.9, -3.11, 5.13, -7.15});
 
 	test_hamiltonian_product_rules((quaternion){1.9, -3.11, 5.13, -7.15}, (quaternion){13, 11, 9, -7}, (quaternion){1, -15, 5, -35});
+
+	test_rotations((vector){1.0, 2.0, 3.0}, 1.5, (vector){1.0, 0.4, 3.9});
 
 	return 0;
 }
