@@ -150,3 +150,22 @@ int is_unit_quaternion(const quaternion* Q)
 	float_number magnitude = quaternion_magnitude(Q);
 	return ((UNIT_VALUE - EQUALITY_TOLERANCE) <= magnitude) && (magnitude <= (UNIT_VALUE + EQUALITY_TOLERANCE));
 }
+
+void quaternion_conjugate(quaternion* res, const quaternion* Q)
+{
+	res->sc = +Q->sc;
+	res->xi = -Q->xi;
+	res->yj = -Q->yj;
+	res->zk = -Q->zk;
+}
+
+void quaternion_reciprocal(quaternion* res, const quaternion* Q)
+{
+	// calculate magnitude
+	float_number magnitude_squared = quaternion_magnitude_squared(Q);
+
+	res->sc = +Q->sc / magnitude_squared;
+	res->xi = -Q->xi / magnitude_squared;
+	res->yj = -Q->yj / magnitude_squared;
+	res->zk = -Q->zk / magnitude_squared;
+}
