@@ -61,7 +61,8 @@ void vector_parallel_component(vector* C, const vector* A, const vector* unit_di
 
 // C = component of A perpendicular to B
 // unit_dir must be a unit vector
-void vector_perpendicular_component(vector* C, const vector* A, const vector* unit_dir);
+// a side effect is to also poduce the parallel_component, this can be NULL if you don't need it
+void vector_perpendicular_component(vector* C, vector* parallel_component, const vector* A, const vector* unit_dir);
 
 // --------------------------------------------------------------------------------
 

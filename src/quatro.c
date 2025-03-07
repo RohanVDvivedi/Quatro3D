@@ -86,17 +86,21 @@ float_number vector_unit_dir(vector* unit_A, const vector* A)
 void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir)
 {
 	// multiply magnitude and the direction, magnitude of this new vector is A.unitB
-	vector_mul_scalar(C, &unit_dir, vector_dot_prod(A, &unit_dir));
+	vector_mul_scalar(C, unit_dir, vector_dot_prod(A, unit_dir));
 }
 
-void vector_perpendicular_component(vector* C, const vector* A, const vector* unit_dir)
+void vector_perpendicular_component(vector* C, vector* parallel_component, const vector* A, const vector* unit_dir)
 {
+	// allocate stack memory for parallel_component if the di not provide this to us
+	vector parallel_component_temp;
+	if(parallel_component == (void*)(0))
+		parallel_component = &parallel_component_temp;
+
 	// here, we get parallel component of A
-	vector parallel_component;
-	vector_parallel_component(&parallel_component, A, unit_dir);
+	vector_parallel_component(parallel_component, A, unit_dir);
 
 	// C = A - component of A parallel to unit_dir = component of A perpendicular to unit_dir
-	vector_sub(C, A, &parallel_component);
+	vector_sub(C, A, parallel_component);
 }
 
 void compose_quaternion(quaternion* Q, float angle, const vector* axis)
