@@ -98,7 +98,7 @@ float_number quaternion_magnitude(const quaternion* Q);
 // quaternion_magnitude(A) == 1.0
 int is_unit_quaternion(const quaternion* Q);
 
-// at the end of this function res is same as Q, but with the xi, yj and zk with opposite sign\
+// at the end of this function res is same as Q, but with the xi, yj and zk with opposite sign
 // res = [Q->sc, -Q->xi, -Q->yj, -Q->zk]
 void quaternion_conjugate(quaternion* res, const quaternion* Q);
 

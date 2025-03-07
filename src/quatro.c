@@ -126,6 +126,9 @@ float_number decompose_quaternion(vector* axis, const quaternion* Q)
 	axis->zk = Q->zk;
 
 	// convert axis to unit vector
+	if(is_zero_vector(axis)) // an identity_quaternion will have axis as a zero vector, so give it a random unit vector
+		(*axis) = unit_vector_x_axis;
+	else
 	{
 		vector temp = (*axis);
 		vector_unit_dir(axis, &temp);
