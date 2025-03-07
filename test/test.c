@@ -125,7 +125,7 @@ void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
 	printf("also then A * B * (D^-1) = C, lhs is given below\n");
 	quaternion lhs;
 	quaternion_hamilton_prod(&lhs, &A_times_B, &D_1);
-	printf("lsh from above = "); print_quaternion(lhs); printf("\n");
+	printf("lhs from above = "); print_quaternion(lhs); printf("\n");
 
 	printf("\n");
 }
