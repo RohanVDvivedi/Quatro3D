@@ -131,3 +131,23 @@ void quaternion_hamilton_prod(quaternion* C, const quaternion* A, const quaterni
 void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai);
 
 #endif
+
+/*
+	Some tips for your next quadcopter project
+
+	Gryroscope data
+		let gyroscope data be W = vector(Wx, Wy, Wx) (Note:: which is angular rotation w.r.t. your local axis)
+		Now to get a chnage to quaternion by this W we can do
+		q_change = compose_quaternion(|W|, unit_axis_in_direction_of(W));
+		Let your global frame of reference be at some rotation already at Quaternion Q
+		then your final Qnew = quaternion_hamilton_prod(q_change, Q);
+		Voila and you are done.
+		if you expand this equation, you will realize that it is very conducive to Kalman Filtering (which is system being of the form => Xk+1 = A * Xk, all of these are martices).
+
+	Accelerometer data alone can not give you quaternion
+		let's talk about absolute_roll (Euler angles are shit and outdated), this quantity is the absolute rotation needed about +X axis to make Y axis parallel to horizon
+		Similarly define absolute_pitch as, the absolute rotation needed about +Y axis to make X axis parallel to horizon
+		Now these 2 quantities are not interrelated so they are not Euler angles in any sense
+		let A_initial be unit vector in the initial Acceleration, and A_current be the unit vector in current acceleration
+		absolute_pitch = angle_between_2_vectors([0,1,0], A_current, A_initial); -> the parameters are reversed, because here local axis has rotated but not the acceleration vector itself
+*/
