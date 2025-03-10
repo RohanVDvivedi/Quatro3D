@@ -185,8 +185,8 @@ void test_2_vector_rotation_diffs(vector A, vector B, vector axis, float angle)
 	axis_of_rotation_for_2_vectors(&axis_calculated, &Ai, &Af, &Bi, &Bf);
 	printf("axis_calculated : "); print_vector(axis_calculated); printf("\n");
 
-	printf("angle to rotation from A = %f\n", angle_between_2_vectors(&axis_calculated, &Ai, &Af));
-	printf("angle to rotation from B = %f\n", angle_between_2_vectors(&axis_calculated, &Bi, &Bf));
+	printf("angle of rotation from A = %f\n", angle_between_2_vectors(&axis_calculated, &Ai, &Af));
+	printf("angle of rotation from B = %f\n", angle_between_2_vectors(&axis_calculated, &Bi, &Bf));
 
 	printf("\n");
 }
