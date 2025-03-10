@@ -236,5 +236,13 @@ int main()
 	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,1,1}, 0.5);
 	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){1,0,1}, 0.5);
 
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){2,0,0}, -1.5);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,3,0}, -1.5);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,0,4}, -1.5);
+
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){2,3,0}, -1.5);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,3,2}, -1.5);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){4,0,5}, -1.5);
+
 	return 0;
 }
