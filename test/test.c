@@ -232,5 +232,9 @@ int main()
 	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,1,0}, 0.5);
 	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,0,1}, 0.5);
 
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){1,1,0}, 0.5);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,1,1}, 0.5);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){1,0,1}, 0.5);
+
 	return 0;
 }
