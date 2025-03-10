@@ -244,5 +244,16 @@ int main()
 	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){0,3,2}, -1.5);
 	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){4,0,5}, -1.5);
 
+	// tests when there is no rotation
+	// this will also give a nan result
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){2,1,4}, 0);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){1,3,4}, 0);
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){4,1,4}, 0);
+
+	// test for when axis is parallel to one of the vectors, OR when both the vector are parallel
+	// this will give an errored result or a nan
+	test_2_vector_rotation_diffs((vector){6,-7,1}, (vector){1,2,3}, (vector){6,-7,1}, -2.0);
+	test_2_vector_rotation_diffs((vector){6,-7,1}, (vector){3,-3.5,0.5}, (vector){6,7,1}, -2.0);
+
 	return 0;
 }
