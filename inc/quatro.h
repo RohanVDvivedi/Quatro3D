@@ -156,4 +156,13 @@ void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai);
 		Now these 2 quantities are not interrelated so they are not Euler angles in any sense
 		let A_initial be unit vector in the initial Acceleration, and A_current be the unit vector in current acceleration
 		absolute_pitch = angle_between_2_vectors([0,1,0], A_current, A_initial); -> the parameters are reversed, because here local axis has rotated but not the acceleration vector itself
+
+	Magnetometer
+		Now getting a quaternion from only magnetometer is not possible, but if you accelerometer with it then the things change
+		get the initial and final direction of these vector (get unit vecotrs in their directions), Ai, Af, and Mi and Mf
+		Now the axis of rotation for the quaternion about the global axis is
+		unit_axis = axis_of_rotation_for_2_vectors(Af, Ai, Mf, Mi); -> the parameters are reversed, because here local axis has rotated but not the acceleration/magnetometer vector itself
+		angle = angle_between_2_vectors(unit_axis, Af, Ai); OR like wise using magnetometer readings -> again the note the reverse parameters
+		now you can compute the quaternion using the unit_axis and the angle
+		NOTE : here this logic can not be used if for some reason (like closer to poles), when both the sensors are pointing in collinear direction OR when the direction of atleast one of the vectors change with time or position
 */
