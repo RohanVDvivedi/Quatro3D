@@ -79,6 +79,8 @@ float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit
 
 // a single change in vector from Ai to Af can happen due to rotation about infinite number of axis-s
 // but if you have 2 such changes from 2 non collinear vectors then we can find the unit axis in which the plane was rotated
+// this function could error and may return nan, if any of the A or B vectors are parallel to either each other (which is not allowed and must be checked) OR are paralle with the actual axis of rotation (which can not be checked unless the function results correctly)
+// this function also returns a nan if the absolute orientation says that there is no rotation what so ever
 void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, const vector* unit_Af, const vector* unit_Bi, const vector* unit_Bf);
 
 // --------------------------------------------------------------------------------
