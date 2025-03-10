@@ -154,6 +154,40 @@ void test_rotations(vector axis, float angle, vector vi)
 	printf("\n");
 }
 
+void test_2_vector_rotation_diffs(vector A, vector B, vector axis, float angle)
+{
+	make_unit_vector(&axis);
+	vector Ai = A;
+	make_unit_vector(&Ai);
+	vector Bi = B;
+	make_unit_vector(&Bi);
+
+	printf("Ai : "); print_vector(Ai); printf(" is unit %d\n", is_unit_vector(&Ai));
+	printf("Bi : "); print_vector(Bi); printf(" is unit %d\n", is_unit_vector(&Bi));
+	printf("axis : "); print_vector(axis); printf(" angle = %f\n", angle);
+
+	// construct actual quaternion
+	quaternion q;
+	compose_quaternion(&q, angle, &axis);
+	printf("q : "); print_quaternion(q); printf("\n");
+
+	// perform rotations
+	vector Af;
+	rotate_by_quaternion(&Af, &q, &Ai);
+	vector Bf;
+	rotate_by_quaternion(&Bf, &q, &Bi);
+
+	// print outputs after rotation
+	printf("Af : "); print_vector(Af); printf(" is unit %d\n", is_unit_vector(&Af));
+	printf("Bf : "); print_vector(Bf); printf(" is unit %d\n", is_unit_vector(&Bf));
+
+	vector axis_calculated;
+	axis_of_rotation_for_2_vectors(&axis_calculated, &Ai, &Af, &Bi, &Bf);
+	printf("axis_calculated : "); print_vector(axis_calculated); printf("\n");
+
+	printf("\n");
+}
+
 int main()
 {
 	test_vector_components((vector){3.9, 1.9, -1.6}, (vector){2.0, 2.5, -2.6});
@@ -178,6 +212,12 @@ int main()
 	printf("-------------------NOW WORKING IN ONLY X-Y PLANE---------------------------\n\n");
 	for(float f = -M_PI; f <= M_PI + 0.1; f += M_PI/6)
 		test_rotations((vector){0, 0, 1}, f, (vector){1, 0, 0});
+
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){5,-2,3}, 2.5);
+
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){5,-2,3}, -1.5);
+
+	test_2_vector_rotation_diffs((vector){3,7,1}, (vector){1,2,3}, (vector){-5,-1,3}, 1.5);
 
 	return 0;
 }
