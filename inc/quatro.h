@@ -136,10 +136,12 @@ void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai);
 	Some tips for your next quadcopter project
 
 	Gryroscope data
-		let gyroscope data be W = vector(Wx, Wy, Wx) (Note:: which is angular rotation w.r.t. your local axis)
-		Now to get a chnage to quaternion by this W we can do
-		q_change = compose_quaternion(|W|, unit_axis_in_direction_of(W));
-		Let your global frame of reference be at some rotation already at Quaternion Q
+		We will be integrating this data so lets assume the current quaternion rotation w.r.t global axis is Q
+		let gyroscope data be Wrel = vector(Wx, Wy, Wx) (Note:: which is angular rotation w.r.t. your local axis)
+		first we need to get Wabs which is rate of angular rotation w.r.t. global axis
+		Wabs = rotate_by_quaternion(reciprocal(Q), Wrel);
+		Now to get a change in quaternion by this Wabs we can do
+		q_change = compose_quaternion(|Wabs|, unit_axis_in_direction_of(Wabs));
 		then your final Qnew = quaternion_hamilton_prod(q_change, Q);
 		Voila and you are done.
 		if you expand this equation, you will realize that it is very conducive to Kalman Filtering (which is system being of the form => Xk+1 = A * Xk, all of these are martices).
