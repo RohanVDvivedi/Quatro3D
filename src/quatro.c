@@ -170,7 +170,7 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 	float_number Kz = (A_diff.xi * B_diff.yj) - (B_diff.xi * A_diff.yj); // unit_axis->zk = Kz * K
 
 	// we also have information that unit_aixs has magnitude of 1
-	float_number K = UNIT_VALUE / sqroot(K1 * K1 + K2 * K2 + K3 * K3)
+	float_number K = UNIT_VALUE / sqroot(Kx * Kx + Ky * Ky + Kz * Kz);
 	unit_axis->xi = Kx * K;
 	unit_axis->yj = Ky * K;
 	unit_axis->zk = Kz * K;
