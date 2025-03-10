@@ -77,6 +77,10 @@ void vector_perpendicular_component(vector* C, vector* parallel_component, const
 // if a solution could not be found then NAN is returned
 float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit_Ai, const vector* unit_Af);
 
+// a single change in vector from Ai to Af can happen due to rotation about infinite number of axis-s
+// but if you have 2 such changes from 2 non collinear vectors then we can find the unit axis in which the plane was rotated
+void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, const vector* unit_Af, const vector* unit_Bi, const vector* unit_Bf);
+
 // --------------------------------------------------------------------------------
 
 // QUATERNION 3D (for rotation)
