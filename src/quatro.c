@@ -183,6 +183,12 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 		(*unit_axis) = unit_vector_z_axis;
 		return;
 	}
+	else if(D == 0 && C == 0) // x component is 0 for sure
+	{
+		(*unit_axis) = (vector){0,-A_diff.zk/A_diff.yj,1};
+		make_unit_vector(unit_axis);
+		return;
+	}
 
 	float_number D_2 = D * D;
 	float_number C_2 = C * C;
