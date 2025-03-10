@@ -165,16 +165,15 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 
 	// now we know that, Ai dot unit_axis = Af dit unit_axis -> components of A in the direction of unit_axis will not change due to rotation
 	// so this gives A_diff dot unit_axis = 0 and B_diff dot unit_axis = 0
-	float_number D = (B_diff.yj * A_diff.zk - A_diff.yj * B_diff.zk) / (A_diff.xi * B_diff.zk - B_diff.xi * A_diff.zk); // unit_axis->xi = D * unit_axis->yj
-	float_number C = (B_diff.zk * A_diff.yj - A_diff.zk * B_diff.yj) / (A_diff.xi * B_diff.yj - B_diff.xi * A_diff.yj); // unit_axis->xi = C * unit_axis->zk
-
-	float_number D_2 = D * D;
-	float_number C_2 = C * C;
+	float_number Kx = (A_diff.yj * B_diff.zk) - (B_diff.yj * A_diff.zk); // unit_axis->xi = Kx * K
+	float_number Ky = (A_diff.zk * B_diff.xi) - (B_diff.zk * A_diff.xi); // unit_axis->yj = Ky * K
+	float_number Kz = (A_diff.xi * B_diff.yj) - (B_diff.xi * A_diff.yj); // unit_axis->zk = Kz * K
 
 	// we also have information that unit_aixs has magnitude of 1
-	unit_axis->xi = sqroot((C_2 * D_2) / (C_2 * D_2 + C_2 + D_2));
-	unit_axis->yj = unit_axis->xi / D;
-	unit_axis->zk = unit_axis->xi / C;
+	float_number K = UNIT_VALUE / sqroot(K1 * K1 + K2 * K2 + K3 * K3)
+	unit_axis->xi = Kx * K;
+	unit_axis->yj = Ky * K;
+	unit_axis->zk = Kz * K;
 }
 
 const quaternion identity_quaternion = {.sc = 1.0, .xi = 0.0, .yj = 0.0, .zk = 0.0};
