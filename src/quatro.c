@@ -168,6 +168,13 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 	float_number D = (B_diff.yj * A_diff.zk - A_diff.yj * B_diff.zk) / (A_diff.xi * B_diff.zk - B_diff.xi * A_diff.zk); // unit_axis->xi = D * unit_axis->yj
 	float_number C = (B_diff.zk * A_diff.yj - A_diff.zk * B_diff.yj) / (A_diff.xi * B_diff.yj - B_diff.xi * A_diff.yj); // unit_axis->xi = D * unit_axis->zk
 
+	if(isnan(D) && isnan(C)) // if both are nan, there is no result
+		(*unit_axis) = unit_vector_x_axis;
+	else if(isnan(D)) // x and y components are 0s making unit_axis as +z direction
+		(*unit_axis) = unit_vector_z_axis;
+	else if(isnan(C)) // x and z components are 0s making unit_axis as +y direction
+		(*unit_axis) = unit_vector_z_axis;
+
 	float_number D_2 = D * D;
 	float_number C_2 = C * C;
 
