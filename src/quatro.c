@@ -166,14 +166,23 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 	// now we know that, Ai dot unit_axis = Af dit unit_axis -> components of A in the direction of unit_axis will not change due to rotation
 	// so this gives A_diff dot unit_axis = 0 and B_diff dot unit_axis = 0
 	float_number D = (B_diff.yj * A_diff.zk - A_diff.yj * B_diff.zk) / (A_diff.xi * B_diff.zk - B_diff.xi * A_diff.zk); // unit_axis->xi = D * unit_axis->yj
-	float_number C = (B_diff.zk * A_diff.yj - A_diff.zk * B_diff.yj) / (A_diff.xi * B_diff.yj - B_diff.xi * A_diff.yj); // unit_axis->xi = D * unit_axis->zk
+	float_number C = (B_diff.zk * A_diff.yj - A_diff.zk * B_diff.yj) / (A_diff.xi * B_diff.yj - B_diff.xi * A_diff.yj); // unit_axis->xi = C * unit_axis->zk
 
 	if(isnan(D) && isnan(C)) // if both are nan, there is no result
+	{
 		(*unit_axis) = unit_vector_x_axis;
+		return;
+	}
 	else if(isnan(D)) // x and y components are 0s making unit_axis as +z direction
+	{
 		(*unit_axis) = unit_vector_z_axis;
+		return;
+	}
 	else if(isnan(C)) // x and z components are 0s making unit_axis as +y direction
+	{
 		(*unit_axis) = unit_vector_z_axis;
+		return;
+	}
 
 	float_number D_2 = D * D;
 	float_number C_2 = C * C;
