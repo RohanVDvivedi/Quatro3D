@@ -180,7 +180,7 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 	}
 	else if(isnan(C)) // x and z components are 0s making unit_axis as +y direction
 	{
-		(*unit_axis) = unit_vector_z_axis;
+		(*unit_axis) = unit_vector_y_axis;
 		return;
 	}
 	else if(D == 0 && C == 0) // x component is 0 for sure
