@@ -17,7 +17,7 @@ A simple 3D geometry library for 3D vectors (point translations) and quaternions
 ## Using The library
  * add `-lquatro3d -lm` linker flag, while compiling your application
  * do not forget to include appropriate public api headers as and when needed. this includes
-   * `#include<quatro.h>`
+   * `#include<quatro3d/quatro.h>`
 
 ## Instructions for uninstalling library
 

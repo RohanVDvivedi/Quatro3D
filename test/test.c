@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#include<quatro.h>
+#include<quatro3d/quatro.h>
 
 void print_vector(vector v)
 {

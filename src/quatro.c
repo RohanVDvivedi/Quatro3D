@@ -1,4 +1,4 @@
-#include<quatro.h>
+#include<quatro3d/quatro.h>
 
 #ifndef M_PI
 	#define M_PI ((float_number)(3.141592653589793238L))
