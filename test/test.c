@@ -17,20 +17,18 @@ void test_quaternion_compose_decompose(float angle, vector v)
 {
 	printf("TEST : quaternion compose decompose\n");
 
-	print_vector(v); printf("is v unit %d\n", is_unit_vector(&v));
+	print_vector(v); printf("is v unit %d\n", is_unit_vector(v));
 
-	vector axis;
-	vector_unit_dir(&axis, &v);
+	vector axis = vector_unit_dir(NULL, v);
 
-	printf("is axis unit %d\n", is_unit_vector(&axis));
+	printf("is axis unit %d\n", is_unit_vector(axis));
 
-	print_vector(axis);printf(" is axis unit %d ", is_unit_vector(&axis));
+	print_vector(axis);printf(" is axis unit %d ", is_unit_vector(axis));
 	printf(", angle = %f\n", angle);
 
-	quaternion q;
-	compose_quaternion(&q, angle, &axis);
+	quaternion q =compose_quaternion(angle, axis);
 
-	print_quaternion(q);printf(" is unit = %d\n", is_unit_quaternion(&q));
+	print_quaternion(q);printf(" is unit = %d\n", is_unit_quaternion(q));
 
 	angle = 0;
 	axis = (vector){};
@@ -38,7 +36,7 @@ void test_quaternion_compose_decompose(float angle, vector v)
 	print_vector(axis);
 	printf("%f\n", angle);
 
-	angle = decompose_quaternion(&axis, &q);
+	angle = decompose_quaternion(&axis, q);
 
 	print_vector(axis);
 	printf("%f\n", angle);
@@ -50,18 +48,16 @@ void test_vector_components(vector v, vector dir_for_v)
 {
 	printf("TEST : vector components\n");
 
-	vector dir;
-	vector_unit_dir(&dir, &dir_for_v);
+	vector dir = vector_unit_dir(NULL, dir_for_v);
 
 	vector parallel;
-	vector perpendicular;
-	vector_perpendicular_component(&perpendicular, &parallel, &v, &dir);
+	vector perpendicular = vector_perpendicular_component(&parallel, v, dir);
 
-	printf("vec : "); print_vector(v); printf(" is_unit = %d\n", is_unit_vector(&v));
-	printf("dov : "); print_vector(dir_for_v); printf(" is_unit = %d\n", is_unit_vector(&dir_for_v));
-	printf("dir : "); print_vector(dir); printf(" is_unit = %d\n", is_unit_vector(&dir));
-	printf("||| : "); print_vector(parallel); printf(" is_unit = %d\n", is_unit_vector(&parallel));
-	printf("_|_ : "); print_vector(perpendicular); printf(" is_unit = %d\n", is_unit_vector(&perpendicular));
+	printf("vec : "); print_vector(v); printf(" is_unit = %d\n", is_unit_vector(v));
+	printf("dov : "); print_vector(dir_for_v); printf(" is_unit = %d\n", is_unit_vector(dir_for_v));
+	printf("dir : "); print_vector(dir); printf(" is_unit = %d\n", is_unit_vector(dir));
+	printf("||| : "); print_vector(parallel); printf(" is_unit = %d\n", is_unit_vector(parallel));
+	printf("_|_ : "); print_vector(perpendicular); printf(" is_unit = %d\n", is_unit_vector(perpendicular));
 
 	printf("\n");
 }
@@ -70,28 +66,22 @@ void test_conjugate_and_reciprocal(quaternion q)
 {
 	printf("q : "); print_quaternion(q); printf("\n");
 
-	quaternion q_c;
-	quaternion_conjugate(&q_c, &q);
+	quaternion q_c = quaternion_conjugate(q);
 	printf("q_c : "); print_quaternion(q_c); printf("\n");
 
-	quaternion q_r;
-	quaternion_reciprocal(&q_r, &q);
+	quaternion q_r = quaternion_reciprocal(q);
 	printf("q_r : "); print_quaternion(q_r); printf("\n");
 
-	quaternion q_times_q_c;
-	quaternion_hamilton_prod(&q_times_q_c, &q, &q_c);
+	quaternion q_times_q_c = quaternion_hamilton_prod(q, q_c);
 	printf("q * q_c : "); print_quaternion(q_times_q_c); printf("\n");
 
-	quaternion q_c_times_q;
-	quaternion_hamilton_prod(&q_c_times_q, &q_c, &q);
+	quaternion q_c_times_q = quaternion_hamilton_prod(q_c, q);
 	printf("q_c * q : "); print_quaternion(q_c_times_q); printf("\n");
 
-	quaternion q_times_q_r;
-	quaternion_hamilton_prod(&q_times_q_r, &q, &q_r);
+	quaternion q_times_q_r = quaternion_hamilton_prod(q, q_r);
 	printf("q * q_r : "); print_quaternion(q_times_q_r); printf("\n");
 
-	quaternion q_r_times_q;
-	quaternion_hamilton_prod(&q_r_times_q, &q_r, &q);
+	quaternion q_r_times_q = quaternion_hamilton_prod(q_r, q);
 	printf("q_r * q : "); print_quaternion(q_r_times_q); printf("\n");
 
 	printf("\n");
@@ -99,20 +89,15 @@ void test_conjugate_and_reciprocal(quaternion q)
 
 void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
 {
-	quaternion A_times_B;
-	quaternion_hamilton_prod(&A_times_B, &A, &B);
+	quaternion A_times_B = quaternion_hamilton_prod(A, B);
 
-	quaternion C_1;
-	quaternion_reciprocal(&C_1, &C);
+	quaternion C_1 = quaternion_reciprocal(C);
 
-	quaternion D;
-	quaternion_hamilton_prod(&D, &C_1, &A_times_B);
+	quaternion D = quaternion_hamilton_prod(C_1, A_times_B);
 
-	quaternion D_1;
-	quaternion_reciprocal(&D_1, &D);
+	quaternion D_1 = quaternion_reciprocal(D);
 
-	quaternion C_times_D;
-	quaternion_hamilton_prod(&C_times_D, &C, &D);
+	quaternion C_times_D = quaternion_hamilton_prod(C, D);
 
 	printf("A : "); print_quaternion(A); printf("\n");
 	printf("B : "); print_quaternion(B); printf("\n");
@@ -123,8 +108,7 @@ void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
 	printf("C * D : "); print_quaternion(C_times_D); printf("\n");
 
 	printf("also then A * B * (D^-1) = C, lhs is given below\n");
-	quaternion lhs;
-	quaternion_hamilton_prod(&lhs, &A_times_B, &D_1);
+	quaternion lhs = quaternion_hamilton_prod(A_times_B, D_1);
 	printf("lhs from above = "); print_quaternion(lhs); printf("\n");
 
 	printf("\n");
@@ -132,61 +116,53 @@ void test_hamiltonian_product_rules(quaternion A, quaternion B, quaternion C)
 
 void test_rotations(vector axis, float angle, vector vi)
 {
-	printf("vi : "); print_vector(vi); printf(" mag = %f \n", vector_magnitude(&vi));
+	printf("vi : "); print_vector(vi); printf(" mag = %f \n", vector_magnitude(vi));
 
 	// generate quaternion
-	make_unit_vector(&axis);
+	axis = vector_unit_dir(NULL, axis);
 	printf("axis : "); print_vector(axis); printf(" angle = %f\n", angle);
-	quaternion q;
-	compose_quaternion(&q, angle, &axis);
+	quaternion q = compose_quaternion(angle, axis);
 	printf("q : "); print_quaternion(q); printf("\n");
 
-	vector vf;
-	rotate_by_quaternion(&vf, &q, &vi);
-	printf("vf : "); print_vector(vf); printf(" mag = %f \n", vector_magnitude(&vf));
+	vector vf = rotate_by_quaternion(q, vi);
+	printf("vf : "); print_vector(vf); printf(" mag = %f \n", vector_magnitude(vf));
 
 	// make vi and vf unit vectors
-	make_unit_vector(&vi);
-	make_unit_vector(&vf);
+	vi = vector_unit_dir(NULL, vi);
+	vf = vector_unit_dir(NULL, vf);
 
-	printf("calculate angle from axis and vi and vf => %f\n", angle_between_2_vectors(&axis, &vi, &vf));
+	printf("calculate angle from axis and vi and vf => %f\n", angle_between_2_vectors(axis, vi, vf));
 
 	printf("\n");
 }
 
 void test_2_vector_rotation_diffs(vector A, vector B, vector axis, float angle)
 {
-	make_unit_vector(&axis);
-	vector Ai = A;
-	make_unit_vector(&Ai);
-	vector Bi = B;
-	make_unit_vector(&Bi);
+	axis = vector_unit_dir(NULL, axis);
+	vector Ai = vector_unit_dir(NULL, A);
+	vector Bi = vector_unit_dir(NULL, B);
 
-	printf("Ai : "); print_vector(Ai); printf(" is unit %d\n", is_unit_vector(&Ai));
-	printf("Bi : "); print_vector(Bi); printf(" is unit %d\n", is_unit_vector(&Bi));
+	printf("Ai : "); print_vector(Ai); printf(" is unit %d\n", is_unit_vector(Ai));
+	printf("Bi : "); print_vector(Bi); printf(" is unit %d\n", is_unit_vector(Bi));
 	printf("axis : "); print_vector(axis); printf(" angle = %f\n", angle);
 
 	// construct actual quaternion
-	quaternion q;
-	compose_quaternion(&q, angle, &axis);
+	quaternion q = compose_quaternion(angle, axis);
 	printf("q : "); print_quaternion(q); printf("\n");
 
 	// perform rotations
-	vector Af;
-	rotate_by_quaternion(&Af, &q, &Ai);
-	vector Bf;
-	rotate_by_quaternion(&Bf, &q, &Bi);
+	vector Af = rotate_by_quaternion(q, Ai);
+	vector Bf = rotate_by_quaternion(q, Bi);
 
 	// print outputs after rotation
-	printf("Af : "); print_vector(Af); printf(" is unit %d\n", is_unit_vector(&Af));
-	printf("Bf : "); print_vector(Bf); printf(" is unit %d\n", is_unit_vector(&Bf));
+	printf("Af : "); print_vector(Af); printf(" is unit %d\n", is_unit_vector(Af));
+	printf("Bf : "); print_vector(Bf); printf(" is unit %d\n", is_unit_vector(Bf));
 
-	vector axis_calculated;
-	axis_of_rotation_for_2_vectors(&axis_calculated, &Ai, &Af, &Bi, &Bf);
+	vector axis_calculated = axis_of_rotation_for_2_vectors(Ai, Af, Bi, Bf);
 	printf("axis_calculated : "); print_vector(axis_calculated); printf("\n");
 
-	printf("angle of rotation from A = %f\n", angle_between_2_vectors(&axis_calculated, &Ai, &Af));
-	printf("angle of rotation from B = %f\n", angle_between_2_vectors(&axis_calculated, &Bi, &Bf));
+	printf("angle of rotation from A = %f\n", angle_between_2_vectors(axis_calculated, Ai, Af));
+	printf("angle of rotation from B = %f\n", angle_between_2_vectors(axis_calculated, Bi, Bf));
 
 	printf("\n");
 }
