@@ -99,38 +99,39 @@ struct quaternion
 extern const quaternion identity_quaternion;
 
 // compose a quaternion, representing an angle of rotation about the given unit_axis (which must be a unit_vector)
-void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis);
+quaternion compose_quaternion(float angle, const vector unit_axis);
 
 // decomposes a auaternion into its angle (return value) and the axis of rotation
-float_number decompose_quaternion(vector* axis, const quaternion* Q);
+// axis here must not be NULL
+float_number decompose_quaternion(vector* axis, const quaternion Q);
 
 // sum of squares of components of the quaternion
-float_number quaternion_magnitude_squared(const quaternion* Q);
+float_number quaternion_magnitude_squared(const quaternion Q);
 
 // sqrt(output of above function)
-float_number quaternion_magnitude(const quaternion* Q);
+float_number quaternion_magnitude(const quaternion Q);
 
 // quaternion_magnitude(A) == 1.0
-int is_unit_quaternion(const quaternion* Q);
+int is_unit_quaternion(const quaternion Q);
 
-// at the end of this function res is same as Q, but with the xi, yj and zk with opposite sign
-// res = [Q->sc, -Q->xi, -Q->yj, -Q->zk]
-void quaternion_conjugate(quaternion* res, const quaternion* Q);
+// return value is same as Q, but with the xi, yj and zk with opposite sign
+// returns = [Q->sc, -Q->xi, -Q->yj, -Q->zk]
+quaternion quaternion_conjugate(const quaternion Q);
 
 // this is reciprocal of Q, hamiltonian product of quaternion and its reciprocal is identity_quaternion
 // res = quaternion_conjugate / quaternion_magnitude
 // for a unit_quaternion, reciprocal and conjugate are the same thing
 // in rotation terms they both represent the same rotation but in opposite direction
-void quaternion_reciprocal(quaternion* res, const quaternion* Q);
+quaternion quaternion_reciprocal(const quaternion Q);
 
-// hamiltonian product of 2 quaternions A and B to give C
-// C = A x B
-// also A x B = C * D, then (C^-1) x A x B = D and A x B x (D^-1) = C
-void quaternion_hamilton_prod(quaternion* C, const quaternion* A, const quaternion* B);
+// hamiltonian product of 2 quaternions A and B
+// returns A x B
+// also A x B = C x D, then (C^-1) x A x B = D and A x B x (D^-1) = C
+quaternion quaternion_hamilton_prod(const quaternion A, const quaternion B);
 
 // get result vector after rotating Ai by Quaternion Q
 // same as Q x Ai x (Q^-1)
-void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai);
+vector rotate_by_quaternion(const quaternion Q, const vector Ai);
 
 #endif
 

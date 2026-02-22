@@ -175,94 +175,96 @@ vector axis_of_rotation_for_2_vectors(const vector unit_Ai, const vector unit_Af
 
 const quaternion identity_quaternion = {.sc = 1.0, .xi = 0.0, .yj = 0.0, .zk = 0.0};
 
-void compose_quaternion(quaternion* Q, float angle, const vector* unit_axis)
+quaternion compose_quaternion(float_number angle, const vector unit_axis)
 {
 	float_number sine_by_2 = sine(angle / 2);
 	float_number cosine_by_2 = cosine(angle / 2);
 
-	Q->sc = cosine_by_2;
-	Q->xi = sine_by_2 * unit_axis->xi;
-	Q->yj = sine_by_2 * unit_axis->yj;
-	Q->zk = sine_by_2 * unit_axis->zk;
+	return (quaternion) {
+		.sc = cosine_by_2,
+		.xi = sine_by_2 * unit_axis.xi,
+		.yj = sine_by_2 * unit_axis.yj,
+		.zk = sine_by_2 * unit_axis.zk,
+	};
 }
 
-float_number decompose_quaternion(vector* axis, const quaternion* Q)
+float_number decompose_quaternion(vector* axis, const quaternion Q)
 {
 	// get axis
-	axis->xi = Q->xi;
-	axis->yj = Q->yj;
-	axis->zk = Q->zk;
+	axis->xi = Q.xi;
+	axis->yj = Q.yj;
+	axis->zk = Q.zk;
 
 	// convert axis to unit vector
-	if(is_zero_vector(axis)) // an identity_quaternion will have axis as a zero vector, so give it a random unit vector
+	if(is_zero_vector(*axis)) // an identity_quaternion will have axis as a zero vector, so give it a random unit vector
 		(*axis) = unit_vector_x_axis;
 	else
-		make_unit_vector(axis);
+		(*axis) = vector_unit_dir(NULL, (*axis));
 
 	// return the angle
-	return 2 * arccosine(Q->sc);
+	return 2 * arccosine(Q.sc);
 }
 
-float_number quaternion_magnitude_squared(const quaternion* Q)
+float_number quaternion_magnitude_squared(const quaternion Q)
 {
-	return (Q->sc * Q->sc) + (Q->xi * Q->xi) + (Q->yj * Q->yj) + (Q->zk * Q->zk);
+	return (Q.sc * Q.sc) + (Q.xi * Q.xi) + (Q.yj * Q.yj) + (Q.zk * Q.zk);
 }
 
-float_number quaternion_magnitude(const quaternion* Q)
+float_number quaternion_magnitude(const quaternion Q)
 {
 	return sqroot(quaternion_magnitude_squared(Q));
 }
 
-int is_unit_quaternion(const quaternion* Q)
+int is_unit_quaternion(const quaternion Q)
 {
 	float_number magnitude = quaternion_magnitude(Q);
 	return are_float_numbers_equal(UNIT_VALUE, magnitude);
 }
 
-void quaternion_conjugate(quaternion* res, const quaternion* Q)
+quaternion quaternion_conjugate(const quaternion Q)
 {
-	res->sc = +Q->sc;
-	res->xi = -Q->xi;
-	res->yj = -Q->yj;
-	res->zk = -Q->zk;
+	return (quaternion) {
+		.sc = +Q.sc,
+		.xi = -Q.xi,
+		.yj = -Q.yj,
+		.zk = -Q.zk,
+	};
 }
 
-void quaternion_reciprocal(quaternion* res, const quaternion* Q)
+quaternion quaternion_reciprocal(const quaternion Q)
 {
 	// calculate magnitude
 	float_number magnitude_squared = quaternion_magnitude_squared(Q);
 
-	res->sc = +Q->sc / magnitude_squared;
-	res->xi = -Q->xi / magnitude_squared;
-	res->yj = -Q->yj / magnitude_squared;
-	res->zk = -Q->zk / magnitude_squared;
+	return (quaternion) {
+		.sc = +Q.sc / magnitude_squared,
+		.xi = -Q.xi / magnitude_squared,
+		.yj = -Q.yj / magnitude_squared,
+		.zk = -Q.zk / magnitude_squared,
+	};
 }
 
-void quaternion_hamilton_prod(quaternion* C, const quaternion* A, const quaternion* B)
+quaternion quaternion_hamilton_prod(const quaternion A, const quaternion B)
 {
-	C->sc = (A->sc * B->sc) - (A->xi * B->xi) - (A->yj * B->yj) - (A->zk * B->zk);
-	C->xi = (A->sc * B->xi) + (A->xi * B->sc) + (A->yj * B->zk) - (A->zk * B->yj);
-	C->yj = (A->sc * B->yj) - (A->xi * B->zk) + (A->yj * B->sc) + (A->zk * B->xi);
-	C->zk = (A->sc * B->zk) + (A->xi * B->yj) - (A->yj * B->xi) + (A->zk * B->sc);
+	return (quaternion) {
+		.sc = (A.sc * B.sc) - (A.xi * B.xi) - (A.yj * B.yj) - (A.zk * B.zk),
+		.xi = (A.sc * B.xi) + (A.xi * B.sc) + (A.yj * B.zk) - (A.zk * B.yj),
+		.yj = (A.sc * B.yj) - (A.xi * B.zk) + (A.yj * B.sc) + (A.zk * B.xi),
+		.zk = (A.sc * B.zk) + (A.xi * B.yj) - (A.yj * B.xi) + (A.zk * B.sc),
+	};
 }
 
-void rotate_by_quaternion(vector* Af, const quaternion* Q, const vector* Ai)
+vector rotate_by_quaternion(const quaternion Q, const vector Ai)
 {
 	//quaternion Q_reciprocal;
 	//quaternion_reciprocal(Q_reciprocal, Q);
 	// since we know that the Q is a unit quaternion, we can use the conjuagte instead
-	quaternion Q_conjugate;
-	quaternion_conjugate(&Q_conjugate, Q);
+	quaternion Q_conjugate = quaternion_conjugate(Q);
 
-	quaternion AI = {.sc = 0, .xi = Ai->xi, .yj = Ai->yj, .zk = Ai->zk};
-	quaternion AF;
+	quaternion AI = {.sc = 0, .xi = Ai.xi, .yj = Ai.yj, .zk = Ai.zk};
 
 	// Q * Ai * (Q^-1)
-	{
-		quaternion t1;
-		quaternion_hamilton_prod(&t1, Q, &AI);
-		quaternion_hamilton_prod(&AF, &t1, &Q_conjugate);
-	}
+	quaternion AF = quaternion_hamilton_prod(quaternion_hamilton_prod(Q, AI), Q_conjugate);
 
-	(*Af) = (vector){.xi = AF.xi, .yj = AF.yj, .zk = AF.zk};
+	return (vector){.xi = AF.xi, .yj = AF.yj, .zk = AF.zk};
 }
