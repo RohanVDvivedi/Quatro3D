@@ -1,5 +1,7 @@
 #include<quatro3d/quatro.h>
 
+#include<stddef.h>
+
 #ifndef M_PI
 	#define M_PI ((float_number)(3.141592653589793238L))
 #endif
@@ -25,143 +27,135 @@ const vector unit_vector_x_axis = {.xi = 1.0, .yj = 0.0, .zk = 0.0};
 const vector unit_vector_y_axis = {.xi = 0.0, .yj = 1.0, .zk = 0.0};
 const vector unit_vector_z_axis = {.xi = 0.0, .yj = 0.0, .zk = 1.0};
 
-int is_zero_vector(const vector* A)
+int is_zero_vector(const vector A)
 {
-	return (A->xi == 0.0) && (A->yj == 0.0) && (A->zk == 0.0);
+	return (A.xi == 0.0) && (A.yj == 0.0) && (A.zk == 0.0);
 }
 
-int is_unit_vector(const vector* A)
+int is_unit_vector(const vector A)
 {
 	float_number magnitude = vector_magnitude(A);
 	return are_float_numbers_equal(UNIT_VALUE, magnitude);
 }
 
-int are_equal_vectors(const vector* A, const vector* B)
+int are_equal_vectors(const vector A, const vector B)
 {
-	return are_float_numbers_equal(A->xi, B->xi) && are_float_numbers_equal(A->yj, B->yj) && are_float_numbers_equal(A->zk, B->zk);
+	return are_float_numbers_equal(A.xi, B.xi) && are_float_numbers_equal(A.yj, B.yj) && are_float_numbers_equal(A.zk, B.zk);
 }
 
-void vector_sum(vector* C, const vector* A, const vector* B)
+vector vector_sum(const vector A, const vector B)
 {
-	C->xi = A->xi + B->xi;
-	C->yj = A->yj + B->yj;
-	C->zk = A->zk + B->zk;
+	return (vector){
+		.xi = A.xi + B.xi,
+		.yj = A.yj + B.yj,
+		.zk = A.zk + B.zk,
+	};
 }
 
-void vector_sub(vector* C, const vector* A, const vector* B)
+vector vector_sub(const vector A, const vector B)
 {
-	C->xi = A->xi - B->xi;
-	C->yj = A->yj - B->yj;
-	C->zk = A->zk - B->zk;
+	return (vector){
+		.xi = A.xi - B.xi,
+		.yj = A.yj - B.yj,
+		.zk = A.zk - B.zk,
+	};
 }
 
-void vector_mul_scalar(vector* C, const vector* A, float_number sc)
+vector vector_mul_scalar(const vector A, float_number sc)
 {
-	C->xi = A->xi * sc;
-	C->yj = A->yj * sc;
-	C->zk = A->zk * sc;
+	return (vector){
+		.xi = A.xi * sc,
+		.yj = A.yj * sc,
+		.zk = A.zk * sc,
+	};
 }
 
-void vector_cross_prod(vector* C, const vector* A, const vector* B)
+vector vector_cross_prod(const vector A, const vector B)
 {
-	C->xi = (A->yj * B->zk) - (A->zk * B->yj);
-	C->yj = (A->zk * B->xi) - (A->xi * B->zk);
-	C->zk = (A->xi * B->yj) - (A->yj * B->xi);
+	return (vector){
+		.xi = (A.yj * B.zk) - (A.zk * B.yj),
+		.yj = (A.zk * B.xi) - (A.xi * B.zk),
+		.zk = (A.xi * B.yj) - (A.yj * B.xi),
+	};
 }
 
-float_number vector_dot_prod(const vector* A, const vector* B)
+float_number vector_dot_prod(const vector A, const vector B)
 {
-	return (A->xi * B->xi) + (A->yj * B->yj) + (A->zk * B->zk);
+	return (A.xi * B.xi) + (A.yj * B.yj) + (A.zk * B.zk);
 }
 
-float_number vector_magnitude_squared(const vector* A)
+float_number vector_magnitude_squared(const vector A)
 {
 	return vector_dot_prod(A, A);
 }
 
-float_number vector_magnitude(const vector* A)
+float_number vector_magnitude(const vector A)
 {
 	return sqroot(vector_magnitude_squared(A));
 }
 
-float_number vector_unit_dir(vector* unit_A, const vector* A)
+vector vector_unit_dir(float_number* magnitude, const vector A)
 {
-	float_number magnitude = vector_magnitude(A);
-	vector_mul_scalar(unit_A, A, UNIT_VALUE / magnitude);
-	return magnitude;
+	float_number magnitude_temp;
+	if(magnitude == (void*)(0))
+		magnitude = &magnitude_temp;
+
+	(*magnitude) = vector_magnitude(A);
+	return vector_mul_scalar(A, UNIT_VALUE / (*magnitude));
 }
 
-float_number make_unit_vector(vector* A)
-{
-	float_number magnitude = vector_magnitude(A);
-	// below line of code represents an element by element division so it is just safe to do it, kindly avoid this in user space code
-	vector_mul_scalar(A, A, UNIT_VALUE / magnitude);
-	return magnitude;
-}
-
-void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir)
+vector vector_parallel_component(const vector A, const vector unit_dir)
 {
 	// multiply magnitude and the direction, magnitude of this new vector is A.unitB
-	vector_mul_scalar(C, unit_dir, vector_dot_prod(A, unit_dir));
+	return vector_mul_scalar(unit_dir, vector_dot_prod(A, unit_dir));
 }
 
-void vector_perpendicular_component(vector* C, vector* parallel_component, const vector* A, const vector* unit_dir)
+vector vector_perpendicular_component(vector* parallel_component, const vector A, const vector unit_dir)
 {
-	// allocate stack memory for parallel_component if the di not provide this to us
+	// allocate stack memory for parallel_component if the it is not provided to us
 	vector parallel_component_temp;
 	if(parallel_component == (void*)(0))
 		parallel_component = &parallel_component_temp;
 
 	// here, we get parallel component of A
-	vector_parallel_component(parallel_component, A, unit_dir);
+	(*parallel_component) = vector_parallel_component(A, unit_dir);
 
-	// C = A - component of A parallel to unit_dir = component of A perpendicular to unit_dir
-	vector_sub(C, A, parallel_component);
+	// A - component of A parallel to unit_dir = component of A perpendicular to unit_dir
+	return vector_sub(A, (*parallel_component));
 }
 
-float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit_Ai, const vector* unit_Af)
+float_number angle_between_2_vectors(const vector unit_axis, const vector unit_Ai, const vector unit_Af)
 {
 	// find perpendicular and parallel components in unit_axis direction -> subscript p for paralle and pp for perpendicular
 	vector unit_Ai_p;
-	vector unit_Ai_pp;
-	vector_perpendicular_component(&unit_Ai_pp, &unit_Ai_p, unit_Ai, unit_axis);
+	vector unit_Ai_pp = vector_perpendicular_component(&unit_Ai_p, unit_Ai, unit_axis);
 	vector unit_Af_p;
-	vector unit_Af_pp;
-	vector_perpendicular_component(&unit_Af_pp, &unit_Af_p, unit_Af, unit_axis);
+	vector unit_Af_pp = vector_perpendicular_component(&unit_Af_p, unit_Af, unit_axis);
 
-	// vector remains unchanges in parallel to the unit_axis direction, so magnitudes must match
-	{
-		float_number aip_mag = vector_magnitude(&unit_Ai_p);
-		float_number afp_mag = vector_magnitude(&unit_Af_p);
-		if(!are_float_numbers_equal(aip_mag, afp_mag))
-			return NAN;
-	}
+	// vector ofcourse remains unchanged in direction parallel to the unit_axis direction, so magnitudes must match
+	if(!are_float_numbers_equal(vector_magnitude(unit_Ai_p), vector_magnitude(unit_Af_p)))
+		return NAN;
 
 	// now just forget about the parallel components
 	// all we need to do is find angle between perpedicular components
 
-	float_number A_dot = vector_dot_prod(&unit_Ai_pp, &unit_Af_pp);
-	// convert dot product into cosine of the angle
-	A_dot /= vector_magnitude_squared(&unit_Ai_pp);
-	vector A_cross;
-	vector_cross_prod(&A_cross, &unit_Ai_pp, &unit_Af_pp);
-	// make A_cross unit vector
-	make_unit_vector(&A_cross);
+	float_number angle_cosine = vector_dot_prod(unit_Ai_pp, unit_Af_pp) / vector_magnitude_squared(unit_Ai_pp);;
+	float_number angle = arccosine(angle_cosine);
 
-	float_number angle = arccosine(A_dot);
-	if(!are_equal_vectors(&A_cross, unit_axis))
+	// make A_cross unit vector
+	vector unit_A_cross = vector_unit_dir(NULL, vector_cross_prod(unit_Ai_pp, unit_Af_pp));
+
+	if(!are_equal_vectors(unit_A_cross, unit_axis))
 		angle = -angle;
 
 	return angle;
 }
 
-void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, const vector* unit_Af, const vector* unit_Bi, const vector* unit_Bf)
+vector axis_of_rotation_for_2_vectors(const vector unit_Ai, const vector unit_Af, const vector unit_Bi, const vector unit_Bf)
 {
 	// find out change of both A and B
-	vector A_diff;
-	vector_sub(&A_diff, unit_Af, unit_Ai);
-	vector B_diff;
-	vector_sub(&B_diff, unit_Bf, unit_Bi);
+	vector A_diff = vector_sub(unit_Af, unit_Ai);
+	vector B_diff = vector_sub(unit_Bf, unit_Bi);
 
 	// now we know that, Ai dot unit_axis = Af dit unit_axis -> components of A in the direction of unit_axis will not change due to rotation
 	// so this gives A_diff dot unit_axis = 0 and B_diff dot unit_axis = 0
@@ -171,9 +165,12 @@ void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, co
 
 	// we also have information that unit_aixs has magnitude of 1
 	float_number K = UNIT_VALUE / sqroot(Kx * Kx + Ky * Ky + Kz * Kz);
-	unit_axis->xi = Kx * K;
-	unit_axis->yj = Ky * K;
-	unit_axis->zk = Kz * K;
+
+	return (vector) {
+		.xi = Kx * K,
+		.yj = Ky * K,
+		.zk = Kz * K,
+	};
 }
 
 const quaternion identity_quaternion = {.sc = 1.0, .xi = 0.0, .yj = 0.0, .zk = 0.0};

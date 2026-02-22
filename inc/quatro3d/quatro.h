@@ -27,61 +27,57 @@ extern const vector unit_vector_y_axis;
 extern const vector unit_vector_z_axis;
 
 // if all the 3 components of vector are 0
-int is_zero_vector(const vector* A);
+int is_zero_vector(const vector A);
 
 // |A| == 1.0
-int is_unit_vector(const vector* A);
+int is_unit_vector(const vector A);
 
 // chec if A == B
-int are_equal_vectors(const vector* A, const vector* B);
+int are_equal_vectors(const vector A, const vector B);
 
-// C = A + B
-void vector_sum(vector* C, const vector* A, const vector* B);
+// returns A + B
+vector vector_sum(const vector A, const vector B);
 
-// C = A - B
-void vector_sub(vector* C, const vector* A, const vector* B);
+// returns A - B
+vector vector_sub(const vector A, const vector B);
 
-// c = A * sc
-void vector_mul_scalar(vector* C, const vector* A, float_number sc);
+// returns A * sc
+vector vector_mul_scalar(const vector A, float_number sc);
 
-// C = A X B
-void vector_cross_prod(vector* C, const vector* A, const vector* B);
+// returns A X B
+vector vector_cross_prod(const vector A, const vector B);
 
 // return value A.B
-float_number vector_dot_prod(const vector* A, const vector* B);
+float_number vector_dot_prod(const vector A, const vector B);
 
 // returns value A.A
-float_number vector_magnitude_squared(const vector* A);
+float_number vector_magnitude_squared(const vector A);
 
 // returns value sqrt(A.A)
-float_number vector_magnitude(const vector* A);
+float_number vector_magnitude(const vector A);
 
-// get a unit_vector in direction of A in unitResult
-// returns magnitude in return value, unitResult is not correct if magnitude returned is 0
-float_number vector_unit_dir(vector* unit_A, const vector* A);
+// returns a unit_vector in direction of A in unitResult
+// magnitude may be NULL
+vector vector_unit_dir(float_number* magnitude, const vector A);
 
-// convert vector to unit vector in place
-// returns magnitude of the vector
-float_number make_unit_vector(vector* A);
-
-// C = component of A parallel to unit_dir
+// returns component of A parallel to unit_dir
 // unit_dir must be a unit vector
-void vector_parallel_component(vector* C, const vector* A, const vector* unit_dir);
+vector vector_parallel_component(const vector A, const vector unit_dir);
 
-// C = component of A perpendicular to B
+// returns component of A perpendicular to B
 // unit_dir must be a unit vector
 // a side effect is to also poduce the parallel_component, this can be NULL if you don't need it
-void vector_perpendicular_component(vector* C, vector* parallel_component, const vector* A, const vector* unit_dir);
+vector vector_perpendicular_component(vector* parallel_component, const vector A, const vector unit_dir);
 
 // figures out the angle of rotation about unit_axis, require to move unit vector from Ai to Af
 // if a solution could not be found then NAN is returned
-float_number angle_between_2_vectors(const vector* unit_axis, const vector* unit_Ai, const vector* unit_Af);
+float_number angle_between_2_vectors(const vector unit_axis, const vector unit_Ai, const vector unit_Af);
 
 // a single change in vector from Ai to Af can happen due to rotation about infinite number of axis-s
 // but if you have 2 such changes from 2 non collinear vectors then we can find the unit axis in which the plane was rotated
 // this function could error and may return nan, if any of the A or B vectors are parallel to either each other (which is not allowed and must be checked) OR are paralle with the actual axis of rotation (which can not be checked unless the function results correctly)
 // this function also returns a nan if the absolute orientation says that there is no rotation what so ever
-void axis_of_rotation_for_2_vectors(vector* unit_axis, const vector* unit_Ai, const vector* unit_Af, const vector* unit_Bi, const vector* unit_Bf);
+vector axis_of_rotation_for_2_vectors(const vector unit_Ai, const vector unit_Af, const vector unit_Bi, const vector unit_Bf);
 
 // --------------------------------------------------------------------------------
 
