@@ -8,7 +8,10 @@
 
 #define UNIT_VALUE ((float_number)(1.0L))
 #define EQUALITY_TOLERANCE ((float_number)(0.00001L))
-#define are_float_numbers_equal(a, b) ((((a) - EQUALITY_TOLERANCE) <= (b)) && ((b) <= ((a) + EQUALITY_TOLERANCE)))
+static inline int are_float_numbers_equal(float_number a, float_number b)
+{
+	return ((a - EQUALITY_TOLERANCE) <= b) && (b <= (a + EQUALITY_TOLERANCE));
+}
 
 // below 7 macros are chat-gpt generated for language agnostic version of the trigonometric functions
 
@@ -29,7 +32,7 @@ const vector unit_vector_z_axis = {.xi = 0.0, .yj = 0.0, .zk = 1.0};
 
 int is_zero_vector(const vector A)
 {
-	return (A.xi == 0.0) && (A.yj == 0.0) && (A.zk == 0.0);
+	return are_float_numbers_equal(A.xi, 0.0) && are_float_numbers_equal(A.yj, 0.0) && are_float_numbers_equal(A.zk, 0.0);
 }
 
 int is_unit_vector(const vector A)
@@ -139,7 +142,10 @@ float_number angle_between_2_vectors(const vector unit_axis, const vector unit_A
 	// now just forget about the parallel components
 	// all we need to do is find angle between perpedicular components
 
-	float_number angle_cosine = vector_dot_prod(unit_Ai_pp, unit_Af_pp) / vector_magnitude_squared(unit_Ai_pp);;
+	float_number angle_cosine = vector_dot_prod(unit_Ai_pp, unit_Af_pp) / vector_magnitude_squared(unit_Ai_pp);
+
+	if(angle_cosine >  UNIT_VALUE) angle_cosine =  UNIT_VALUE;
+	if(angle_cosine < -UNIT_VALUE) angle_cosine = -UNIT_VALUE;
 	float_number angle = arccosine(angle_cosine);
 
 	// make A_cross unit vector
@@ -202,7 +208,10 @@ float_number decompose_quaternion(vector* axis, const quaternion Q)
 		(*axis) = vector_unit_dir(NULL, (*axis));
 
 	// return the angle
-	return 2 * arccosine(Q.sc);
+	float_number Q_sc = Q.sc;
+	if(Q_sc >  UNIT_VALUE) Q_sc =  UNIT_VALUE;
+	if(Q_sc < -UNIT_VALUE) Q_sc = -UNIT_VALUE;
+	return 2 * arccosine(Q_sc);
 }
 
 float_number quaternion_magnitude_squared(const quaternion Q)

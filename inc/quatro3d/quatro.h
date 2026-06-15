@@ -99,7 +99,7 @@ struct quaternion
 extern const quaternion identity_quaternion;
 
 // compose a quaternion, representing an angle of rotation about the given unit_axis (which must be a unit_vector)
-quaternion compose_quaternion(float angle, const vector unit_axis);
+quaternion compose_quaternion(float_number angle, const vector unit_axis);
 
 // decomposes a auaternion into its angle (return value) and the axis of rotation
 // axis here must not be NULL
